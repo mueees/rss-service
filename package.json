@@ -1,0 +1,25 @@
+{
+  "name": "rss-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mueees/rss-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mueees/rss-service/issues"
+  },
+  "homepage": "https://github.com/mueees/rss-service#readme",
+  "dependencies": {
+    "bull": "^1.0.0",
+    "chai": "3.5.0",
+    "lodash": "^4.13.1",
+    "mocha": "^2.5.3"
+  }
+}

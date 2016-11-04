@@ -63,10 +63,10 @@ class WorkerHive {
 
     setMaxWorkers(count) {
         if (!Number.isInteger(count) || count < 1) {
-            this.throwError('Max workers must be positive integer');
-        } else {
-            this._maxWorkers = count;
+            count = 1;
         }
+
+        this._maxWorkers = count;
     }
 
     finish() {

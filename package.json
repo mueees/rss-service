@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/mueees/rss-service#readme",
   "dependencies": {
-    "bull": "^1.0.0",
     "chai": "3.5.0",
+    "kue": "^0.11.4",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3"
   }

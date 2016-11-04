@@ -2,16 +2,16 @@
 
 let queue = require('../../modules/queue');
 let UpdateManager = require('./modules/update-manager').UpdateManager;
-let WorkerHive = require('../../modules/worker-hive');
-let UpdateWorker = require('./modules/update-worker');
+let WorkerHive = require('../../modules/worker-hive').WorkerHive;
+let updateWorker = require('./modules/update-worker');
 let UPDATE_CONFIG = require('./config');
 
 let updateManager = null;
 
-module.exports = function () {
+function initialize() {
     if (!updateManager) {
         let hive = new WorkerHive({
-            worker: UpdateWorker,
+            worker: updateWorker,
             maxWorkers: 5
         });
 
@@ -25,4 +25,6 @@ module.exports = function () {
     }
 
     return updateManager;
-};
+}
+
+module.exports = initialize;

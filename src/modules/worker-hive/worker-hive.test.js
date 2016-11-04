@@ -1,6 +1,6 @@
 'use strict';
 
-let WorkerHive = require('./index');
+let WorkerClassHive = require('./index').WorkerClassHive;
 let expect = require('chai').expect;
 
 class DefaultWorker {
@@ -10,23 +10,11 @@ class DefaultWorker {
 
 describe('WorkerHive', function () {
     it('should be defined', function () {
-        expect(WorkerHive).to.be.ok;
-    });
-
-    it('should not allow initialize without worker', function () {
-        let err;
-
-        try {
-            new WorkerHive({});
-        } catch (e) {
-            err = e;
-        }
-
-        expect(err).to.be.an('error');
+        expect(WorkerClassHive).to.be.ok;
     });
 
     it('should initialize hive instance', function () {
-        let workerHive = new WorkerHive({
+        let workerHive = new WorkerClassHive({
             worker: DefaultWorker
         });
 
@@ -34,7 +22,7 @@ describe('WorkerHive', function () {
     });
 
     it('should has execute method', function () {
-        let workerHive = new WorkerHive({
+        let workerHive = new WorkerClassHive({
             worker: DefaultWorker
         });
 
@@ -42,7 +30,7 @@ describe('WorkerHive', function () {
     });
 
     it('should return promise for execute method', function () {
-        let workerHive = new WorkerHive({
+        let workerHive = new WorkerClassHive({
             worker: DefaultWorker
         });
 
@@ -54,7 +42,7 @@ describe('WorkerHive', function () {
     });
 
     it('should has hasFreeWorker method', function () {
-        let workerHive = new WorkerHive({
+        let workerHive = new WorkerClassHive({
             worker: DefaultWorker
         });
 

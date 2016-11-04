@@ -11,14 +11,8 @@ function createQueue() {
     // So you can configure and use only a single Queue object within your node.js process.
     let queue = kue.createQueue();
 
-    queue.on('completed', function (job) {
-        job.remove();
-    });
-
-    queue.on('failed', function (job) {
-        console.log('failed');
-
-        job.remove();
+    queue.on('error', function (error) {
+        console.log('Queue get the error: ' + error);
     });
 
     return queue;

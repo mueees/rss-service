@@ -1,13 +1,11 @@
 'use strict';
 
-class UpdateWorker {
-    execute(data) {
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                resolve(data);
-            }, 1000);
-        });
-    }
+function getNewPosts(feedData) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve(feedData);
+        }, 1000);
+    });
 }
 
-module.exports = UpdateWorker;
+module.exports = getNewPosts;

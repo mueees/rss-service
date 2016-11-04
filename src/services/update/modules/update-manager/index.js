@@ -8,21 +8,26 @@
  *
  * Methods:
  * - change workers number
- * - pause work
- * - resume work
- *
  * */
 
 class UpdateManager {
     constructor(options) {
+        let me = this;
+
         this._hive = options.hive;
         this._queue = options.queue;
 
-        this._initializeQueue(options.taskName);
+        this._queue.process(options.taskName, function (job, done) {
+            me._processJob(job, done);
+        });
     }
 
     setMaxWorkers(count) {
         this._hive.setMaxWorkers(count);
+    }
+
+    getMaxWorkers() {
+        this._hive.getMaxWorkers();
     }
 
     _processJob(job, done) {
@@ -31,44 +36,24 @@ class UpdateManager {
         if (this._hive.hasFreeWorker()) {
             done(null);
 
-            let me = this;
-
             this._hive.execute(job.data).then(function (result) {
-                me._successJobProcess(result, job, done);
+                me._successJobHandler(result, job, done);
             }).catch(function (err) {
-                me._failedJobProcess(err, job, done);
+                me._failedJobhandler(err, job, done);
             });
         } else {
-            let me = this;
-
             setTimeout(function () {
                 me._processJob(job, done);
             }, 1000);
         }
     }
 
-    _successJobProcess(result, job, done) {
-
+    _successJobHandler(result, job) {
+        console.log('Update feed successfully');
     }
 
-    _failedJobProcess(err, job, done) {
-        if (err.isHive) {
-            console.log('Hive error: ' + err.message);
-        } else {
-
-        }
-    }
-
-    _initializeQueue(taskName) {
-        var me = this;
-
-        this._queue.on('error', function (err) {
-            console.log('Queue got the error: ' + err);
-        });
-
-        this._queue.process(taskName, 5, function (job, done) {
-            me._processJob(job, done);
-        });
+    _failedJobhandler(err, job) {
+        console.log('Cannot update feed due to: ' + err.message);
     }
 }
 

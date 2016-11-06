@@ -6,7 +6,7 @@ let config = require('../../config');
 let db = require('../db');
 
 let feedManager = require('./index');
-let feedUrl = 'https://habrahabr.ru/rss/interesting';
+let feedUrl = 'https://www.reddit.com/.rss';
 
 describe('Feed manager', function () {
     before(function (done) {
@@ -21,7 +21,7 @@ describe('Feed manager', function () {
         });
     });
 
-    it.only('should track new feed', function (done) {
+    it('should track new feed', function (done) {
         feedManager.trackFeed(feedUrl).then(function (feed) {
             asyncCheck(done, function () {
                 expect(feed._id).to.be.ok;

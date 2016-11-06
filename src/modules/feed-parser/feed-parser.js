@@ -1,11 +1,11 @@
 'use strict';
 
-let Page = require('../page-parser').Page;
-let FeedParserXML = require('./feed-xml-parser');
-
 class FeedParser {
-    constructor(options) {
-        this.feedUrl = options.feedUrl;
+    constructor(pageLoader, feedParser) {
+        this.pageLoader = pageLoader;
+        this.feedParser = feedParser;
+
+        this.feedUrl = null;
         this.page = null;
         this.feed = null;
     }
@@ -17,10 +17,10 @@ class FeedParser {
             // load feed
             me._loadPage().then(function () {
                 // parse feed
-                let feedParserXML = new FeedParserXML(me.page);
+                me.feedParser.page = me.page;
 
-                feedParserXML.parse().then(function () {
-                    me.feed = feedParserXML.feed;
+                me.feedParser.parse().then(function () {
+                    me.feed = me.feedParser.feed;
                     me.feed.url = me.feedUrl;
 
                     resolve(me.feed);
@@ -36,10 +36,10 @@ class FeedParser {
             if (me.page) {
                 resolve(me.page);
             } else {
-                let page = new Page(me.feedUrl);
+                me.pageLoader.url = me.feedUrl;
 
-                page.load().then(function () {
-                    me.page = page.page;
+                me.pageLoader.load().then(function () {
+                    me.page = me.pageLoader.page;
 
                     resolve(me.page);
                 }, reject);

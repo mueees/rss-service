@@ -2,19 +2,23 @@
 
 let expect = require('chai').expect;
 let asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
+let Page = require('./index');
 
 describe('Page parser', function () {
-    let Page = require('./index').Page;
+
 
     describe('Page class', function () {
         let pageUrl = 'http://google.com';
 
         it('should be implemented', function () {
-            expect(Page).to.be.ok;
+            let page = Page.get();
+
+            expect(page).to.be.ok;
         });
 
         it('should load the html', function (done) {
-            let page = new Page(pageUrl);
+            let page = Page.get();
+            page.url = pageUrl;
 
             page.load().then(function () {
                 asyncCheck(done, function () {
@@ -26,7 +30,8 @@ describe('Page parser', function () {
         });
 
         it('should parse html', function (done) {
-            let page = new Page(pageUrl);
+            let page = Page.get();
+            page.url = pageUrl;
 
             page.parse().then(function () {
                 asyncCheck(done, function () {

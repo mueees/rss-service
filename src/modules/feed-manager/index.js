@@ -1,7 +1,7 @@
 'use strict';
 
 let FeedResource = require('../resources').FeedResource;
-let FeedParser = require('../feed-parser').FeedParser;
+let FeedParser = require('../feed-parser');
 let log = require('mue-core/modules/log')(module);
 
 /**
@@ -30,9 +30,8 @@ function trackFeed(feedUrl) {
 function canTrackFeed(feedUrl) {
     if (feedUrl) {
         return new Promise(function (resolve, reject) {
-            let feedParser = new FeedParser({
-                feedUrl: feedUrl
-            });
+            let feedParser = new FeedParser.get();
+            feedParser.feedUrl = feedUrl;
 
             let feed = FeedResource.findOne({
                 url: feedUrl

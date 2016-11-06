@@ -3,20 +3,21 @@
 let expect = require('chai').expect;
 let asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
 
-let FeedParser = require('./index').FeedParser;
+let FeedParser = require('./index');
 
 describe('Feed parser module', function () {
     describe('FeedParser', function () {
         let habrahabrFeedUrl = 'https://habrahabr.ru/rss/interesting';
 
         it('should be defined', function () {
-            expect(FeedParser).to.be.ok;
+            let feedParser = FeedParser.get();
+
+            expect(feedParser).to.be.ok;
         });
 
         it('should parse habrahabr feed', function (done) {
-            let feedParser = new FeedParser({
-                feedUrl: habrahabrFeedUrl
-            });
+            let feedParser = FeedParser.get();
+            feedParser.feedUrl = habrahabrFeedUrl;
 
             feedParser.parse().then(function () {
                 asyncCheck(done, function () {

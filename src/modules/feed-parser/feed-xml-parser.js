@@ -3,8 +3,8 @@
 let FeedParser = require('feedparser');
 
 class FeedParserXML {
-    constructor(xml) {
-        this.xml = xml;
+    constructor(page) {
+        this.page = page;
     }
 
     parse() {
@@ -32,7 +32,7 @@ class FeedParserXML {
                 });
             });
 
-            feedparser.end(me.xml);
+            feedparser.end(me.page);
         });
     }
 }

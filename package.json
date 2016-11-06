@@ -17,9 +17,14 @@
   },
   "homepage": "https://github.com/mueees/rss-service#readme",
   "dependencies": {
+    "app-module-path": "^1.1.0",
     "chai": "3.5.0",
+    "feedparser": "^1.1.5",
     "kue": "^0.11.4",
     "lodash": "^4.13.1",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "mongoose": "^4.6.6",
+    "mue-core": "git+https://github.com/mueees/mue-core.git",
+    "unfluff": "^1.1.0"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "name": "rss",
+  "description": "Rss service",
+  "queues": {
+    "updateFeed": "feed:update"
+  }
+}

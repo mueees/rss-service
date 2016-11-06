@@ -1,13 +1,14 @@
 'use strict';
 
 let DELIVERY_MANAGER = require('./delivery-manager.constant');
+let log = require('mue-core/modules/log')(module);
 
 class DeliveryManager {
     constructor(options) {
-        this._queue = options.queue;
+        this._updateFeedQueue = options.updateFeedQueue;
 
         // A Number, representing the ID value of the timer
-        this._deliveryInterval = null;
+        this._deliveryTimer = null;
 
         // map of strategies
         this._strategies = {};
@@ -16,20 +17,21 @@ class DeliveryManager {
         this._strategyName = null;
 
         this.deliveryTimeout = options.deliveryTimeout || DELIVERY_MANAGER.defaultDeliveryTimeout;
+
+        this.status = DELIVERY_MANAGER.statuses.stop;
     }
 
     /**
-     * Main method for running delivery manager
-     * */
-    initialize() {
-        this._startDeliveryLoop();
-    }
-
-    /**
-     * Add feed to update feedId queue
+     * Add feed to update
      * */
     addFeedToUpdate(feed) {
+        let me = this;
 
+        return new Promise(function (resolve, reject) {
+            me._updateFeedQueue.add(feed);
+
+            resolve();
+        });
     }
 
     /**
@@ -58,60 +60,73 @@ class DeliveryManager {
     /**
      * Set timeout for execute delivery strategy
      * */
-    setDeliveryTimeout() {
-
-    }
-
-    /**
-     * Get timeout for execute delivery strategy
-     * */
-    getDeliveryTimeout() {
-
+    setDeliveryTimeout(deliveryTimeout) {
+        this.deliveryTimeout = deliveryTimeout;
     }
 
     /**
      * Stop adding new feed for update
      * */
     stop() {
-
+        this.status = DELIVERY_MANAGER.statuses.stop;
+        this._stopDeliveryLoop();
     }
 
     /*
      * Start adding new feed for update
      * */
     start() {
+        this.status = DELIVERY_MANAGER.statuses.running;
 
+        this._startDeliveryLoop();
     }
 
     _stopDeliveryLoop() {
-        if (this._deliveryInterval) {
-            clearInterval(this._deliveryInterval);
+        if (this._deliveryTimer) {
+            clearTimeout(this._deliveryTimer);
         }
     }
 
     _startDeliveryLoop() {
-        let me = this;
-
-        this._deliveryInterval = setInterval(function () {
-            me._processDelivery();
-        }, this.deliveryTimeout);
+        this._processDelivery();
     }
 
     /**
      * Executed every delivery timeout period
      * */
     _processDelivery() {
+        let me = this;
         let strategy = this._strategies[this._strategyName];
 
         strategy.execute().then(function (feed) {
             if (!feed) {
-                console.log('Strategy error: feed invalid');
+                log.info('There is no feed for update');
+
+                me._processPostDelivery();
             } else {
-                console.log(feed.title + ' is delivered to update');
+                me.addFeedToUpdate(feed).then(function () {
+                    log.info(feed.title + ' was added to update');
+
+                    me._processPostDelivery();
+                }).catch(function (error) {
+                    log.error('Cannot add feed to update due to: ' + error.message);
+
+                    me._processPostDelivery();
+                });
             }
         }).catch(function (err) {
-            console.log('Strategy error: ' + err.message);
+            log.error('Strategy error: ' + err.message);
+
+            me._processPostDelivery();
         });
+    }
+
+    _processPostDelivery() {
+        let me = this;
+
+        this._deliveryTimer = setTimeout(function () {
+            me._processDelivery();
+        }, me.deliveryTimeout);
     }
 }
 

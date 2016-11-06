@@ -23,7 +23,7 @@ var feedSchema = new Schema({
         default: 'en'
     },
 
-    titleImage: {
+    image: {
         type: String
     },
 

@@ -1,7 +1,7 @@
 'use strict';
 
+let config = require('../../config');
 let queue = require('../../modules/queue');
-let WorkerHive = require('../../modules/worker-hive').WorkerHive;
 let DeliveryManager = require('./modules/delivery-manager').DeliveryManager;
 
 let RandomDeliveryStrategy = require('./modules/delivery-strategies').RandomDeliveryStrategy;
@@ -10,17 +10,19 @@ let deliveryManager = null;
 
 function initialize() {
     if (!deliveryManager) {
-        let deliveryFeedQueue = queue.get();
+        // initialize queue
+        let updateFeedQueue = queue.get(config.get('queues:updateFeed'));
 
         deliveryManager = new DeliveryManager({
-            queue: deliveryFeedQueue,
+            updateFeedQueue: updateFeedQueue,
             deliveryTimeout: 500
         });
 
+        // set up strategy
         deliveryManager.registerStrategy('random', new RandomDeliveryStrategy());
         deliveryManager.setStrategyName('random');
 
-        deliveryManager.initialize();
+        deliveryManager.start();
     }
 
     return deliveryManager;

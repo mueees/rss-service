@@ -1,11 +1,21 @@
 'use strict';
 
 let DELIVERY_MANAGER = require('./delivery-manager.constant');
-let log = require('mue-core/modules/log')(module);
+
+/**
+ * The main class for managing feed delivering
+ *
+ * Support different strategy types:
+ * - strategy that allow or disallow add feed to update
+ * - strategy that choose which feed should be added to update
+ *
+ * */
 
 class DeliveryManager {
     constructor(options) {
         this._updateFeedQueue = options.updateFeedQueue;
+
+        this.log = options.log;
 
         // A Number, representing the ID value of the timer
         this._deliveryTimer = null;
@@ -100,22 +110,22 @@ class DeliveryManager {
 
         strategy.execute().then(function (feed) {
             if (!feed) {
-                log.info('There is no feed for update');
+                me.log.info('There is no feed for update');
 
                 me._processPostDelivery();
             } else {
                 me.addFeedToUpdate(feed).then(function () {
-                    log.info(feed.title + ' was added to update');
+                    me.log.info(feed.title + ' was added to update');
 
                     me._processPostDelivery();
                 }).catch(function (error) {
-                    log.error('Cannot add feed to update due to: ' + error.message);
+                    me.log.error('Cannot add feed to update due to: ' + error.message);
 
                     me._processPostDelivery();
                 });
             }
         }).catch(function (err) {
-            log.error('Strategy error: ' + err.message);
+            me.log.error('Strategy error: ' + err.message);
 
             me._processPostDelivery();
         });
@@ -130,4 +140,4 @@ class DeliveryManager {
     }
 }
 
-exports.DeliveryManager = DeliveryManager;
+module.exports = DeliveryManager;

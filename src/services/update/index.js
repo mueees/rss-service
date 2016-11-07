@@ -1,11 +1,12 @@
 'use strict';
 
 let queue = require('../../modules/queue');
-let UpdateManager = require('./modules/update-manager').UpdateManager;
+let UpdateManager = require('./modules/update-manager');
 let WorkerHive = require('../../modules/worker-hive').WorkerHive;
 let updateWorker = require('./modules/update-worker');
 let UPDATE_CONFIG = require('./config');
 
+// update manager instance
 let updateManager = null;
 
 function initialize() {
@@ -19,7 +20,7 @@ function initialize() {
 
         updateManager = new UpdateManager({
             hive: hive,
-            queue: updateFeedQueue,
+            deliveryService: updateFeedQueue,
             taskName: UPDATE_CONFIG.updateFeedTaskName
         });
     }

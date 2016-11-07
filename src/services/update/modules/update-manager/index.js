@@ -1,13 +1,16 @@
 'use strict';
 
-/*
+/**
+ * The main class for managing feed updating
+ * Goal:
+ * - take the object which supply new jobs - deliveryService
+ * - pass the work to the hive with workers
+ * - set/get count of workers
  *
- * Data that should be available from admin panel
- * - count of workers
- * - average time for processing
+ * Improvement:
+ * - depending on the custom options change number of worker
+ * - depending on the custom options change type of worker
  *
- * Methods:
- * - change workers number
  * */
 
 class UpdateManager {
@@ -15,9 +18,10 @@ class UpdateManager {
         let me = this;
 
         this._hive = options.hive;
-        this._queue = options.queue;
 
-        this._queue.process(options.taskName, function (job, done) {
+        this._deliveryService = options.deliveryService;
+
+        this._deliveryService.process(options.taskName, function (job, done) {
             me._processJob(job, done);
         });
     }
@@ -39,7 +43,7 @@ class UpdateManager {
             this._hive.execute(job.data).then(function (result) {
                 me._successJobHandler(result, job, done);
             }).catch(function (err) {
-                me._failedJobhandler(err, job, done);
+                me._failedJobHandler(err, job, done);
             });
         } else {
             setTimeout(function () {
@@ -52,9 +56,9 @@ class UpdateManager {
         console.log('Update feed successfully');
     }
 
-    _failedJobhandler(err, job) {
+    _failedJobHandler(err, job) {
         console.log('Cannot update feed due to: ' + err.message);
     }
 }
 
-exports.UpdateManager = UpdateManager;
+module.exports = UpdateManager;

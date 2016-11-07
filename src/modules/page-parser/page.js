@@ -1,6 +1,5 @@
 'use strict';
 
-let log = require('mue-core/modules/log')(module);
 let url = require('url');
 
 /**
@@ -10,13 +9,16 @@ let url = require('url');
 class Page {
     /**
      * @param {PageParser} parser Html parser
+     * @param {log} log
      * */
-    constructor(parser, loader) {
+    constructor(parser, log, loader) {
         // parser object that is responsible for extracting data from the page
         this.parser = parser;
 
         // object that responsible for loading page
         this.loader = loader;
+
+        this.log = log;
 
         // page url
         this.url = null;
@@ -52,7 +54,7 @@ class Page {
                         message = '404 response';
                     }
 
-                    log.error('Cannot load page due to: ' + message);
+                    me.log.error('Cannot load page due to: ' + message);
 
                     reject({
                         message: 'Cannot load page due to: ' + message

@@ -4,6 +4,7 @@ let expect = require('chai').expect;
 let asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
 let config = require('../../config');
 let db = require('../db');
+let testHelper = require('../test-helper');
 
 let feedManager = require('./index');
 let feedUrl = 'https://www.reddit.com/.rss';
@@ -19,6 +20,14 @@ describe('Feed manager', function () {
         }, function () {
             done(new Error('Cannot establish connection'));
         });
+    });
+
+    beforeEach(function (done) {
+        testHelper.db.clear().then(function () {
+            done();
+        }, function () {
+            done(new Error('Cannot establish connection'));
+        })
     });
 
     it('should track new feed', function (done) {

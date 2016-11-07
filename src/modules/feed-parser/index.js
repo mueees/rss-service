@@ -5,13 +5,18 @@
  * @description Fetch the data from a remote url and html source
  * */
 
-let Page = require('../page-parser');
+let pageParser = require('../page-parser');
 let FeedParserXML = require('./feed-xml-parser');
 let FeedParser = require('./feed-parser');
 
-exports.get = function () {
-    let page = Page.get();
-    let feedParserXml = new FeedParserXML();
+exports.get = function (options) {
+    options = options || {};
 
-    return new FeedParser(page, feedParserXml);
+    let page = pageParser.get();
+    let feedParserXml = new FeedParserXML();
+    let feedParser = new FeedParser(page, feedParserXml);
+
+    feedParser.feedUrl = options.feedUrl;
+
+    return feedParser;
 };

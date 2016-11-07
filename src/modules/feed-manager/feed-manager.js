@@ -16,8 +16,9 @@ class FeedManager {
 
         if (feedUrl) {
             return new Promise(function (resolve, reject) {
-                let feedParser = me.feedParserFactory.get();
-                feedParser.feedUrl = feedUrl;
+                let feedParser = me.feedParserFactory.get({
+                    feedUrl: feedUrl
+                });
 
                 let feed = me.FeedResource.findOne({
                     url: feedUrl
@@ -65,7 +66,7 @@ class FeedManager {
                     _id: feedResource._id
                 }
             }).catch(function (error) {
-                log.error(error);
+                me.log.error(error);
 
                 return Promise.reject({
                     message: 'Cannot create feed'

@@ -1,6 +1,7 @@
 'use strict';
 
 let url = require('url');
+let _ = require('lodash');
 
 /**
  * @description Store and get web page by url
@@ -8,17 +9,16 @@ let url = require('url');
  * */
 class Page {
     /**
-     * @param {PageParser} parser Html parser
      * @param {log} log
+     * @param {loader} loader
+     * @param {ERRORS} ERRORS
      * */
-    constructor(parser, log, loader) {
-        // parser object that is responsible for extracting data from the page
-        this.parser = parser;
+    constructor(log, loader, ERRORS) {
 
         // object that responsible for loading page
-        this.loader = loader;
+        this._loader = loader;
 
-        this.log = log;
+        this._log = log;
 
         // page url
         this.url = null;
@@ -28,6 +28,9 @@ class Page {
 
         // parsed page details
         this.pageDetails = null;
+
+        // set of errors
+        this.ERRORS = ERRORS;
     }
 
     /**
@@ -40,7 +43,7 @@ class Page {
             return Promise.resolve(this.page);
         } else {
             return new Promise(function (resolve, reject) {
-                me.loader({
+                me._loader({
                     url: me.url,
                     fullResponse: true
                 }).then(function (data) {
@@ -48,30 +51,26 @@ class Page {
 
                     resolve(me.page);
                 }).catch(function (error) {
-                    let message = error.message || 'unknown reason';
+                    let errorData = {};
 
-                    if (error.response.statusCode === 404) {
-                        message = '404 response';
+                    if (!_.get(error, 'response')) {
+                        errorData.code = me.ERRORS.request.unexpectedResponse.code;
+                        errorData.message = 'Unexpected response';
+                    } else {
+                        errorData.code = me.ERRORS.request.errorStatusCode.code;
+                        errorData.message = 'Error status code';
+
+                        errorData.data = {
+                            statusCode: _.get(error, 'response.statusCode')
+                        };
                     }
 
-                    me.log.error('Cannot load page due to: ' + message);
+                    me._log.error('Cannot load page due to: ' + errorData.message);
 
-                    reject({
-                        message: 'Cannot load page due to: ' + message
-                    });
+                    reject(errorData);
                 });
             });
         }
-    }
-
-    parse() {
-        let me = this;
-
-        return this.load().then(function () {
-            me.parser.page = me.page;
-
-            me.pageDetails = me.parser.parse();
-        });
     }
 
     static getDomain(link) {

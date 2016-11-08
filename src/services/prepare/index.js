@@ -3,37 +3,37 @@
 let queue = require('../../modules/queue');
 let WorkManager = require('./../../modules/work-manager');
 let WorkerHive = require('../../modules/worker-hive').WorkerHive;
-let updateWorker = require('./modules/update-worker');
+let prepareWorker = require('./modules/prepare-post-worker');
 let config = require('../../config');
 let log = require('mue-core/modules/log')(module);
 
-// update manager instance
-let updateManager = null;
+// prepare manager instance
+let prepareManager = null;
 
 function initialize() {
-    if (!updateManager) {
+    if (!prepareManager) {
         // initialize hive
         let hive = new WorkerHive({
-            worker: updateWorker,
-            maxWorkers: 1
+            worker: prepareWorker,
+            maxWorkers: 5
         });
 
         // initialize queues
-        let updateFeedQueue = queue.get(config.get('queues:updateFeed'));
         let preparePostQueue = queue.get(config.get('queues:preparePost'));
+        let savePostQueue = queue.get(config.get('queues:savePost'));
         let errorQueue = queue.get(config.get('queues:error'));
 
         // initialize manager
-        updateManager = new WorkManager({
+        prepareManager = new WorkManager({
             hive: hive,
-            incomingQueue: updateFeedQueue,
-            outcomingQueue: preparePostQueue,
+            incomingQueue: preparePostQueue,
+            outcomingQueue: savePostQueue,
             errorQueue: errorQueue,
             log: log
         });
     }
 
-    return updateManager;
+    return prepareManager;
 }
 
 module.exports = initialize;

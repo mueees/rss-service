@@ -1,10 +1,11 @@
 'use strict';
 
 class Worker {
-    constructor(feedParserFactory, postManager, log) {
+    constructor(feedParserFactory, postManager, log, ERRORS) {
         this._feedParserFactory = feedParserFactory;
         this._postManager = postManager;
         this._log = log;
+        this._ERRORS = ERRORS;
     }
 
     /**
@@ -17,10 +18,11 @@ class Worker {
         return new Promise(function (resolve, reject) {
             // initialize feed parser
             let feedParser = me._feedParserFactory.get({
-                feedUrl: feed.url
+                feedUrl: feed.link
             });
 
             Promise.all([
+                // fetch feed page and parse
                 feedParser.parse(),
 
                 // get last saved post from the feed
@@ -36,7 +38,38 @@ class Worker {
                 }
 
                 resolve(newPosts);
-            }).catch(reject);
+            }).catch(function (error) {
+                me._log.error('Cannot update feed due to: ' + error.message);
+
+                let errorData = {
+                    code: me._ERRORS.feed.unknown.code,
+                    data: {
+                        feedId: feed._id
+                    }
+                };
+
+                // TODO: return appropriate error
+                if (error && error.code) {
+                    switch (error.code) {
+                        case me._ERRORS.request.unexpectedResponse.code:
+                            errorData.code = me._ERRORS.feed.unexpectedResponse.code;
+
+                            break;
+
+                        case me._ERRORS.request.errorStatusCode.code:
+                            errorData.code = me._ERRORS.feed.errorStatusCode.code;
+
+                            break;
+
+                        case me._ERRORS.feedParser.parseError.code:
+                            errorData.code = me._ERRORS.feed.parseError.code;
+
+                            break;
+                    }
+                }
+
+                reject(errorData);
+            });
         });
     }
 

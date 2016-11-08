@@ -12,7 +12,7 @@ var feedSchema = new Schema({
         type: String
     },
 
-    url: {
+    link: {
         type: String,
         required: true,
         unique: true

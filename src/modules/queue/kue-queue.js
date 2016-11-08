@@ -1,9 +1,8 @@
 'use strict';
 
+let log = require('mue-core/modules/log')(module);
 let BaseQueue = require('./base-queue');
-
 let kue = require('kue');
-
 
 class KueQueue extends BaseQueue {
     constructor(name) {
@@ -26,7 +25,11 @@ class KueQueue extends BaseQueue {
     }
 
     add(jobData) {
-        return this._queue.create(this._queueName, jobData);
+        return this._queue.create(this._queueName, jobData).save(function (err) {
+            if (err) {
+                log.error(err.message);
+            }
+        });
     }
 }
 

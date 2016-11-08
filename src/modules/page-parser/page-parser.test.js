@@ -1,46 +1,35 @@
 'use strict';
 
+let fs = require('fs');
 let expect = require('chai').expect;
-let asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
 let Page = require('./index');
+let PageParser = require('./page-parser');
+let asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
+
+// store page mocks from the local folder
+let pageMocks = {};
 
 describe('Page parser', function () {
+    // initialize page mocks
+    before(function () {
+        let options = {
+            encoding: 'utf8'
+        };
 
+        pageMocks['medium-article'] = fs.readFileSync(__dirname + '/page-mocks/medium-article.txt', options);
+    });
 
-    describe('Page class', function () {
-        let pageUrl = 'http://google.com';
-
-        it('should be implemented', function () {
-            let page = Page.get();
-
-            expect(page).to.be.ok;
+    it('should parse html', function (done) {
+        let pageParser = new PageParser(null, {
+            page: pageMocks['medium-article']
         });
 
-        it('should load the html', function (done) {
-            let page = Page.get();
-            page.url = pageUrl;
-
-            page.load().then(function () {
-                asyncCheck(done, function () {
-                    expect(page.page).to.be.ok;
-                });
-            }).catch(function () {
-                done(new Error('Cannot get page'));
-            })
-        });
-
-        it('should parse html', function (done) {
-            let page = Page.get();
-            page.url = pageUrl;
-
-            page.parse().then(function () {
-                asyncCheck(done, function () {
-                    expect(page.page).to.be.ok;
-                    expect(page.pageDetails).to.be.ok;
-                });
-            }).catch(function () {
-                done(new Error('Cannot get page'));
-            })
+        pageParser.parse().then(function () {
+            asyncCheck(done, function () {
+                expect(pageParser.pageDetails).to.be.ok;
+            });
+        }).catch(function (error) {
+            done(new Error(error.message));
         });
     });
 });

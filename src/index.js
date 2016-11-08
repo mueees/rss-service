@@ -21,6 +21,10 @@ require('./modules/db').initConnection({
     host: config.get('db:host')
 });
 
+// initialize feeds
+// require('./initialization').init();
+
 // Enable services
-//let deliveryService = require('./services/delivery')();
+let deliveryService = require('./services/delivery')();
 let updateService = require('./services/update')();
+let prepareService = require('./services/prepare')();

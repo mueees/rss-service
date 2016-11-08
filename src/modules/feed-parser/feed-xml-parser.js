@@ -1,6 +1,7 @@
 'use strict';
 
 let FeedParser = require('feedparser');
+var fs = require('fs');
 
 /*
  List of meta properties
@@ -43,30 +44,46 @@ let FeedParser = require('feedparser');
  * */
 
 class FeedParserXML {
-    constructor(page) {
-        this.page = page;
+    constructor(log, ERRORS, options) {
+        options = options || {};
+
+        this.page = options.page;
+
+        this._log = log;
+        this._ERRORS = ERRORS;
     }
 
     parse() {
         let me = this;
+        let feed = null;
 
         return new Promise(function (resolve, reject) {
-            var feedparser = new FeedParser();
+            let feedparser = new FeedParser();
+
+            feedparser.on('end', function () {
+                me.feed = feed;
+
+                resolve(me.feed);
+            });
 
             feedparser.on('readable', function () {
-                let meta = this.meta;
+                let stream = this;
+
+                let meta = stream.meta;
                 let post;
 
-                me.feed = {
-                    title: meta.title,
-                    description: meta.description,
-                    language: meta.language,
-                    image: meta.image.url,
-                    posts: []
-                };
+                if (!feed) {
+                    feed = {
+                        title: meta.title,
+                        description: meta.description,
+                        language: meta.language,
+                        image: meta.image.url,
+                        posts: []
+                    };
+                }
 
-                while (post = this.read()) {
-                    me.feed.posts.push({
+                while (post = stream.read()) {
+                    feed.posts.push({
                         title: post.title,
                         body: post.summary || post.description,
                         description: post.description || post.summary,
@@ -75,13 +92,14 @@ class FeedParserXML {
                         image: post.image.url
                     });
                 }
-
-                resolve(me.feed);
             });
 
             feedparser.on('error', function (err) {
+                me._log.error('Cannot parse feed due to: ' + err.message);
+
                 reject({
-                    message: 'Cannot parse feed due to: ' + err.message
+                    message: 'Cannot parse feed due to: ' + err.message,
+                    code: me._ERRORS.feedParser.parseError.code
                 });
             });
 

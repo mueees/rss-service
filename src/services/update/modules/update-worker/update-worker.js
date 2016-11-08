@@ -16,7 +16,7 @@ class Worker {
 
         return new Promise(function (resolve, reject) {
             // initialize feed parser
-            let feedParser = this._feedParserFactory.get({
+            let feedParser = me._feedParserFactory.get({
                 feedUrl: feed.url
             });
 
@@ -24,18 +24,34 @@ class Worker {
                 feedParser.parse(),
 
                 // get last saved post from the feed
-                this._postManager.getLastPost(feed._id)
+                me._postManager.getLastPost(feed._id)
             ]).then(function (data) {
-                let feedData = data[0];
                 let lastPost = data[1];
+                let newPosts = [];
 
+                if (!lastPost) {
+                    newPosts = feedParser.feed.posts;
+                } else {
+                    newPosts = me._getNewPosts(feedParser.feed.posts, new Date(lastPost.publicDate));
+                }
 
-
-                resolve([]);
-            }).catch(function () {
-                reject([]);
-            });
+                resolve(newPosts);
+            }).catch(reject);
         });
+    }
+
+    _getNewPosts(posts, date) {
+        var newPosts = [];
+
+        posts.forEach(function (post) {
+            var postDate = new Date(post.publicDate);
+
+            if (postDate > date) {
+                newPosts.push(post);
+            }
+        });
+
+        return newPosts;
     }
 }
 

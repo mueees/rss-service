@@ -22,5 +22,5 @@ require('./modules/db').initConnection({
 });
 
 // Enable services
-let deliveryService = require('./services/delivery')();
+//let deliveryService = require('./services/delivery')();
 let updateService = require('./services/update')();

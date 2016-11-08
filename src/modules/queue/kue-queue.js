@@ -18,7 +18,7 @@ class KueQueue extends BaseQueue {
     }
 
     process(callback) {
-        this._queue.process(callback);
+        this._queue.process(this._queueName, callback);
     }
 
     on() {

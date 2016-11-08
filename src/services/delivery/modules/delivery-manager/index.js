@@ -4,18 +4,21 @@ let DELIVERY_MANAGER = require('./delivery-manager.constant');
 
 /**
  * The main class for managing feed delivering
+ * Pass feed to the update queue.
  *
- * Support different strategy types:
- * - strategy that allow or disallow add feed to update
+ * Support one strategy type:
  * - strategy that choose which feed should be added to update
+ *
+ *
+ *
+ * Improvements:
+ * - strategy that allow or disallow add feed to update
  *
  * */
 
 class DeliveryManager {
     constructor(options) {
         this._updateFeedQueue = options.updateFeedQueue;
-
-        this.log = options.log;
 
         // A Number, representing the ID value of the timer
         this._deliveryTimer = null;
@@ -26,9 +29,10 @@ class DeliveryManager {
         // current strategy name
         this._strategyName = null;
 
-        this.deliveryTimeout = options.deliveryTimeout || DELIVERY_MANAGER.defaultDeliveryTimeout;
+        // service for logging
+        this._log = options.log;
 
-        this.status = DELIVERY_MANAGER.statuses.stop;
+        this.deliveryTimeout = options.deliveryTimeout || DELIVERY_MANAGER.defaultDeliveryTimeout;
     }
 
     /**
@@ -78,7 +82,6 @@ class DeliveryManager {
      * Stop adding new feed for update
      * */
     stop() {
-        this.status = DELIVERY_MANAGER.statuses.stop;
         this._stopDeliveryLoop();
     }
 
@@ -86,8 +89,6 @@ class DeliveryManager {
      * Start adding new feed for update
      * */
     start() {
-        this.status = DELIVERY_MANAGER.statuses.running;
-
         this._startDeliveryLoop();
     }
 
@@ -110,22 +111,22 @@ class DeliveryManager {
 
         strategy.execute().then(function (feed) {
             if (!feed) {
-                me.log.info('There is no feed for update');
+                me._log.info('There is no feed for update');
 
                 me._processPostDelivery();
             } else {
                 me.addFeedToUpdate(feed).then(function () {
-                    me.log.info(feed.title + ' was added to update');
+                    me._log.info(feed.title + ' was added to update');
 
                     me._processPostDelivery();
                 }).catch(function (error) {
-                    me.log.error('Cannot add feed to update due to: ' + error.message);
+                    me._log.error('Cannot add feed to update due to: ' + error.message);
 
                     me._processPostDelivery();
                 });
             }
         }).catch(function (err) {
-            me.log.error('Strategy error: ' + err.message);
+            me._log.error('Strategy error: ' + err.message);
 
             me._processPostDelivery();
         });

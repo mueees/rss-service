@@ -1,11 +1,11 @@
 'use strict';
 
-function getNewPosts(feedData) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve(feedData);
-        }, 1000);
-    });
-}
+let log = require('mue-core/modules/log')(module);
+let postManager = require('../../../../modules/post-manager');
+let feedParserFactory = require('../../../../modules/feed-parser');
 
-module.exports = getNewPosts;
+let Worker = require('./update-worker');
+
+let worker = new Worker(feedParserFactory, postManager, log);
+
+module.exports = worker;

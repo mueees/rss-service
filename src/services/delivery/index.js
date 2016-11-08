@@ -14,10 +14,11 @@ function initialize() {
         // initialize queue
         let updateFeedQueue = queue.get(config.get('queues:updateFeed'));
 
+        // initialize manager
         deliveryManager = new DeliveryManager({
-            log: log,
             updateFeedQueue: updateFeedQueue,
-            deliveryTimeout: 500
+            deliveryTimeout: 500,
+            log: log
         });
 
         // set up strategy

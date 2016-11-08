@@ -2,6 +2,9 @@
   "name": "rss",
   "description": "Rss service",
   "queues": {
-    "updateFeed": "feed:update"
+    "updateFeed": "feed:update",
+    "preparePost": "post:prepare",
+    "savePost": "post:save",
+    "error": "error"
   }
 }

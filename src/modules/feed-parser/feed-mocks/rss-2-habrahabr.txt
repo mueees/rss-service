@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"  >
+<channel>
+	<title>Хабрахабр / Интересные публикации</title>
+	<link>https://habrahabr.ru/</link>
+	<description><![CDATA[Интересные публикации на Хабрахабре]]></description>
+	<language>ru</language>
+	<managingEditor>editor@habrahabr.ru</managingEditor>
+	<generator>habrahabr.ru</generator>
+	<pubDate>Tue, 08 Nov 2016 07:51:38 GMT</pubDate>
+	<lastBuildDate></lastBuildDate>
+        <image>
+            <link>https://habrahabr.ru/</link>
+            <url>https://habrahabr.ru/images/logo.png</url>
+            <title>Хабрахабр</title>
+        </image>
+				  <item>
+    <title><![CDATA[Текстовая трансляция HighLoad++ 2016. День второй]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314442/</guid>
+    <link>https://habrahabr.ru/post/314442/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Сегодня в этом посте весь день будет вестись текстовая трансляция конференции HighLoad++ 2016, проходящей в Сколково 8 ноября. HighLoad++ — это более 200 экспертов высочайшего класса с докладами о высоконагруженных сервисах, проблемах работы с ними и вопросах администрирования. Более 15 залов, плотный график, честный и полезный опыт спикеров — HighLoad++ умеет собирать крутые темы, задавать тон дискуссии и всё на одном дыхании.<br/>
+<br/>
+Если вы хотите смотреть видео из главного зала и включения из мобильной студии Хабрахабра, то вам на <a href="https://special.habrahabr.ru/highload/2016/">страницу спецпроекта</a>. Если почитать онлайн и поообщаться в кооментариях — под кат.<br/>
+<br/>
+<img src="https://habrastorage.org/files/d93/b3b/97d/d93b3b97dfb94a03bfb8a63cc267a5c0.jpg"/><br/>
+ <a href="https://habrahabr.ru/post/314442/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Tue, 08 Nov 2016 07:31:37 GMT</pubDate>
+    <dc:creator>TM_content</dc:creator>
+    <category><![CDATA[Разработка для интернета вещей]]></category><category><![CDATA[Проектирование и рефакторинг]]></category><category><![CDATA[Программирование]]></category><category><![CDATA[Высокая производительность]]></category><category><![CDATA[Блог компании Конференции Олега Бунина (Онтико)]]></category>
+    <category><![CDATA[highload++]]></category><category><![CDATA[высоконагруженные проекты]]></category><category><![CDATA[нагрузочное тестирование]]></category><category><![CDATA[высокопроизводительные вычисления]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Технологии хранения данных VMware vSphere 6. Часть 2.1 – New School: SPBM и VAIO]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314604/</guid>
+    <link>https://habrahabr.ru/post/314604/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Представляю вашему вниманию вторую часть серии публикаций о технологиях хранения VMware vSphere. В ней будут рассмотрены новые возможности, которые стали доступны в 6 версии продукта. Из-за большого объема 2я часть будет разбита на 2 статьи: часть 2.1 с описанием технологий SPBM и VAIO (данная статья), часть 2.2 с описанием VVOL (следующая статья).<br/>
+ <a href="https://habrahabr.ru/post/314604/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 13:54:41 GMT</pubDate>
+    <dc:creator>yahonts</dc:creator>
+    <category><![CDATA[Хранение данных]]></category><category><![CDATA[ИТ-инфраструктура]]></category><category><![CDATA[Виртуализация]]></category>
+    <category><![CDATA[VAIO SPBM vmware vsphere СХД]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[[Перевод] Беглый взгляд на Async-Await в Android]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314574/</guid>
+    <link>https://habrahabr.ru/post/314574/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<h5>От переводчика</h5><br/>
+<p><i>Это мой первый перевод, поэтому прошу прощения за неточности. Если вы найдете ошибки в переводе, пожалуйста, сообщите об этом. Я не нашел лучшего перевода слова <strong><a href="https://en.wikipedia.org/wiki/Coroutine">сoroutine</a></strong>, чем <strong><a href="https://ru.wikipedia.org/wiki/Сопрограмма">сопрограмма</a></strong>, поэтому решил использовать оригинал. Если у вас появятся идеи по этому поводу, буду рад узнать.</i></p><br/>
+<p>Kotlin версии 1.1 принесет в язык <a href="https://github.com/Kotlin/kotlin-coroutines">coroutin'ы</a>, которые позволяют приостанавливать вычисления в какой-то точке, а затем продолжить их позднее. Очевидный пример этой возможности — <a href="http://blog.stephencleary.com/2012/02/async-and-await.html">async-await</a>, который был добавлен в C# несколько лет назад.</p><br/>
+<p>Каждый android разработчик знает, что когда мы имеем дело с сетевыми запросами или другими I/O задачами, то нам необходимо удостовериться, что не происходит блокировка основного потока, а так же, что мы не трогаем UI из фонового потока. На протяжении многих лет приходят и уходят десятки приемов. В этой статье перечислены наиболее популярные, и показаны примеры удобства, которое несет с собой async-await.</p> <a href="https://habrahabr.ru/post/314574/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Tue, 08 Nov 2016 06:07:34 GMT</pubDate>
+    <dc:creator>andreich</dc:creator>
+    <category><![CDATA[Разработка под Android]]></category><category><![CDATA[Kotlin]]></category>
+    <category>android</category><category>kotlin</category><category>async</category><category>await</category><category>await/async</category><category>все читают теги</category><category>но зачем</category><category>android development</category>
+  </item>
+
+	  <item>
+    <title><![CDATA[.NET Standard Library – адекватный стандарт?]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314588/</guid>
+    <link>https://habrahabr.ru/post/314588/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<em>Всякий раз, когда в текущем процессе появляются отклонения, надо задать следующие вопросы: «Это случилось потому, что у нас не было стандарта? Это случилось потому, что мы не следовали стандарту? Это случилось потому, что стандарт не был адекватным?»<br/>
+<strong>Масааки Имаи (автор концепции Кайдзен)</strong><br/>
+</em><br/>
+<div style="text-align:center;"><img src="https://habrastorage.org/files/86d/57f/ec0/86d57fec0fdd48f682aec83e5c754e4e.jpg" alt="image" /></div> <a href="https://habrahabr.ru/post/314588/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 12:39:00 GMT</pubDate>
+    <dc:creator>Detrav</dc:creator>
+    <category><![CDATA[Разработка под Windows]]></category><category><![CDATA[Программирование]]></category><category><![CDATA[Mono и Moonlight]]></category><category><![CDATA[C#]]></category><category><![CDATA[.NET]]></category>
+    <category><![CDATA[.net standard]]></category><category><![CDATA[.net]]></category><category><![CDATA[xamarin]]></category><category><![CDATA[net core]]></category><category><![CDATA[c#]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[[Из песочницы] Немного фактов о python asyncio]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314606/</guid>
+    <link>https://habrahabr.ru/post/314606/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Всем привет! Хотелось бы поделиться опытом использования python asyncio. За полтора года использования в продакшене накопился некоторый опыт, общие приемы, облегчающие жизнь. Естественно, были и грабли, о которых также стоит упомянуть, ибо это поможет сэкономить кучу времени тем, кто только начинает использовать в своих приложениях asyncio. Кому интересно — прошу под кат. <a href="https://habrahabr.ru/post/314606/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 13:25:08 GMT</pubDate>
+    <dc:creator>Amelius0712</dc:creator>
+    <category><![CDATA[Python]]></category>
+    <category>python3 asyncio microservices</category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Обновление Vivaldi 1.4 для Linux — охота на флэш-плагин]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314610/</guid>
+    <link>https://habrahabr.ru/post/314610/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<img src="https://habrastorage.org/getpro/habr/post_images/9d1/7c7/85e/9d17c785e298605361b32a9658ffdde5.png" alt="image"/><br/>
+<br/>
+Всем привет! Сегодня не совсем обычное обновление — это не тестовая сборка, а обновлённый стабильный вариант Vivaldi 1.4 для Linux. Причиной этого обновления (теперь — до версии 1.4.569.41) послужило небольшое изменение работы браузера Vivaldi с флэш-плагином Adobe Pepper (PPAPI). Мы расширили число каталогов, в которых Vivaldi будет искать установленный в системе плагин. Таким образом мы надеемся, что флэш-контент заработает для большего числа наших пользователей.<br/>
+ <a href="https://habrahabr.ru/post/314610/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 13:50:04 GMT</pubDate>
+    <dc:creator>Shpankov</dc:creator>
+    <category><![CDATA[Браузеры]]></category><category><![CDATA[Adobe Flash]]></category><category><![CDATA[Блог компании Vivaldi Technologies AS]]></category>
+    <category><![CDATA[vivaldi]]></category><category><![CDATA[браузеры]]></category><category><![CDATA[flash]]></category><category><![CDATA[обновление]]></category><category><![CDATA[vivaldi technologies]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[[Перевод] Глубокое обучение для новичков: распознаем рукописные цифры]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314242/</guid>
+    <link>https://habrahabr.ru/post/314242/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<p>Представляем первую статью в серии, задуманной, чтобы помочь быстро разобраться в технологии <i>глубокого обучения</i>; мы будем двигаться от базовых принципов к нетривиальным особенностям с целью получить достойную производительность на двух наборах данных: MNIST (классификация рукописных цифр) и CIFAR-10 (классификация небольших изображений по десяти классам: самолет, автомобиль, птица, кошка, олень, собака, лягушка, лошадь, корабль и грузовик).</p><br/>
+<div style="text-align:center;"><img src="https://habrastorage.org/files/5b0/df1/74d/5b0df174d0b5431488f3a8bd2d49320b.png" /></div><br/>
+ <a href="https://habrahabr.ru/post/314242/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 15:47:08 GMT</pubDate>
+    <dc:creator>wunder_editor</dc:creator>
+    <category><![CDATA[Машинное обучение]]></category><category><![CDATA[Алгоритмы]]></category><category><![CDATA[Блог компании Wunder Fund]]></category>
+    <category>neural networks</category><category>deep learning</category><category>machine learning</category><category>wunderfund</category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Персона. Андерс Хейлсберг – создатель Turbo Pascal, Delphi и C#]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314616/</guid>
+    <link>https://habrahabr.ru/post/314616/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<img src="https://habrastorage.org/getpro/habr/post_images/742/1b2/88a/7421b288a12bc47a8f614190cd5c69b8.jpg"/><br/>
+<em>«Я написал огромное количество полезных программ. И совсем немного бесполезных»</em><br/>
+<br/>
+У некоторых людей есть потребность создавать что-то новое. Когда эта потребность реализуется в полной мере, появляются произведения искусства, научные открытия, прорывные технологии. Таким человеком является Андерс Хейлсберг, создатель Turbo Pascal, Delphi и C#.<br/>
+<br/>
+Для многих студентов ВУЗов Turbo Pascal до сих пор остается первым языком, с которого начинается знакомство с программированием. В свое время он был своеобразным прорывом в разработке программного обеспечения. Недаром «в народ» пошел не Pascal, а именно Turbo Pascal. <br/>
+<br/>
+Однако Хейлсберг на этом не остановился. Благодаря его неугасающей потребности создавать новое появились Delphi и С#. Поэтому для многих Андерс является одним из «супергероев» ИТ-индустрии. <a href="https://habrahabr.ru/post/314616/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 15:38:59 GMT</pubDate>
+    <dc:creator>semen_grinshtein</dc:creator>
+    <category><![CDATA[Управление разработкой]]></category><category><![CDATA[Карьера в IT-индустрии]]></category>
+    <category><![CDATA[turbo pascal]]></category><category><![CDATA[delphi]]></category><category><![CDATA[c#]]></category><category><![CDATA[microsoft]]></category><category><![CDATA[borland]]></category><category><![CDATA[персона]]></category><category><![CDATA[языки программирования]]></category><category><![CDATA[разработка по]]></category><category><![CDATA[карьера в it-индустрии]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Генератор случайных чисел без программирования и даже компьютера: чем удивить юного программиста?]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314446/</guid>
+    <link>https://habrahabr.ru/post/314446/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Сейчас, когда Arduino продолжает триумфальное шествие по планете, вряд ли кого-то удивишь схемами на макетной плате. Белые беспаечные макетные платы уже стали обязательным элементом наборов для гиков. И всё-таки я решила попробовать заинтересовать юных программистов из летней школы GoToCamp: провести для них мастер-класс по основам цифровой схемотехники, оканчивающийся сборкой интересного устройства – генератора случайных чисел.<br/>
+<br/>
+<div style="text-align:center;"><img src="https://habrastorage.org/files/152/ed9/e53/152ed9e5380c48efb5a427425d59ad7e.gif" /></div><br/>
+При нажатии на кнопку, на индикаторе высвечивается случайное число. В чем же тут случайность, откуда она берется? Сразу раскрою секрет. Цифры генерируются по порядку: 0, потом 1, 2, и так далее. Хитрость вот в чем: очень высокая частота импульсов. Они выдаются так быстро, что цифры сливаются в одну на индикаторе. И совершенно невозможно угадать цифру!<br/>
+<br/>
+Далее вы прочтете о том, как устроен такой генератор, и как собрать его самостоятельно.<br/>
+ <a href="https://habrahabr.ru/post/314446/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 13:35:54 GMT</pubDate>
+    <dc:creator>robofreak</dc:creator>
+    <category><![CDATA[Читальный зал]]></category><category><![CDATA[Блог компании Московский физико-технический институт (МФТИ)]]></category>
+    <category><![CDATA[электроника для начинающих]]></category><category><![CDATA[киберфизика]]></category><category><![CDATA[ардруино]]></category><category><![CDATA[ardruino]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[ЦОД и цифровая трансформация]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314612/</guid>
+    <link>https://habrahabr.ru/post/314612/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Инфраструктура электропитания и охлаждения ЦОД сегодня генерирует примерно в три раза больше данных и сообщений, чем 10 лет назад. Традиционные средства удаленного мониторинга не рассчитаны на такой информационный поток. Попробуем разобраться, как извлечь из большого объема получаемых данных ценную информацию и повысить эффективность эксплуатации дата-центра, какие потенциальные возможности это открывает. <br/>
+<br/>
+<a href="https://habrahabr.ru/company/ruvds/blog/314612/"><img src="https://habrastorage.org/files/31d/6c8/c49/31d6c8c4957a4812b0c20e82e2870db0.jpg"/></a><br/>
+ <a href="https://habrahabr.ru/post/314612/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 14:08:51 GMT</pubDate>
+    <dc:creator>ru_vds</dc:creator>
+    <category><![CDATA[Хранилища данных]]></category><category><![CDATA[Хранение данных]]></category><category><![CDATA[Хостинг]]></category><category><![CDATA[ИТ-инфраструктура]]></category><category><![CDATA[Блог компании RUVDS.com]]></category>
+    <category><![CDATA[ЦОД]]></category><category><![CDATA[RuVDS]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Приглашаем на Russian AI Cup 2016]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314594/</guid>
+    <link>https://habrahabr.ru/post/314594/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<div style="text-align:center;"><img  src="https://habrastorage.org/files/322/a0f/3cc/322a0f3cc53e476fb1baf7ffae84dbc9.png" alt="image"/></div><br/>
+Седьмого ноября стартует <a href="http://russianaicup.ru/">Russian AI Cup 2016</a>. Это ежегодный чемпионат по программированию искуственного интеллекта, организуемый Mail.Ru Group. Russian AI Cup проводится в форме игры, чтобы получилось наглядно, понятно и просто. Вкратце: участники создают алгоритм, который описывает игровую стратегию. Получившийся бот сражается с другими такими же, а лучший из них побеждает в раунде. Таким образом, из серии раундов организуется турнир, проходящий в несколько этапов.<br/>
+<br/>
+С одной стороны, основная механика игры довольно проста и минимально рабочую стратегию реально написать за пару часов (для быстрого старта в чемпионате можно заглянуть <a href="http://russianaicup.ru/p/quick">сюда</a>, там же можно найти небольшой tutorial). С другой же — в игре получилось много нюансов, и оттачивать стратегию, поднимаясь вверх по турнирной таблице, можно до бесконечности. В этом году предлагаем вам на месяц стать магом и сразиться на средневековом поле боя в MOBA-игре CodeWizards. Впрочем, обо всем по порядку.<br/>
+ <a href="https://habrahabr.ru/post/314594/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 13:34:47 GMT</pubDate>
+    <dc:creator>sat2707</dc:creator>
+    <category><![CDATA[Спортивное программирование]]></category><category><![CDATA[Программирование]]></category><category><![CDATA[Алгоритмы]]></category><category><![CDATA[Блог компании Mail.Ru Group]]></category>
+    <category><![CDATA[искуственный интеллект]]></category><category><![CDATA[russian ai cup]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[PVS-Studio покоряет Интернет]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314602/</guid>
+    <link>https://habrahabr.ru/post/314602/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<p><div style="text-align:center;"><img src="https://habrastorage.org/getpro/habr/post_images/2da/566/a54/2da566a54918e0c1676a3cf88fce1cde.png" /></div></p><br/>
+Основная задача команды PVS-Studio — работа над статическим анализатором кода. Да, работу программиста нельзя назвать бесконечным праздником, но это не значит, что трудовые будни нашей команды — это 8-часовое сидение за компьютером. Эта статья о том, каким образом мы совмещаем приятное с полезным, а именно — реализуем свои творческие задумки и делаем попытки в завоевании интернет мира.<br/>
+ <a href="https://habrahabr.ru/post/314602/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 13:15:21 GMT</pubDate>
+    <dc:creator>AsyaRak</dc:creator>
+    <category><![CDATA[Блог компании PVS-Studio]]></category>
+    <category><![CDATA[статический анализ кода]]></category><category><![CDATA[pvs-studio]]></category><category><![CDATA[static code analysis]]></category><category><![CDATA[маркетинг]]></category><category><![CDATA[соцсети]]></category><category><![CDATA[instagram]]></category><category><![CDATA[youtube]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[ASP.NET Core: Развертывание веб-приложения в службе приложений Azure с помощью Visual Studio]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314252/</guid>
+    <link>https://habrahabr.ru/post/314252/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Представляем вам четвертую часть из цикла статей, посвященных работе с ASP.NET Core. Этот материал представляет из себя подробную инструкцию развертывание веб-приложения в службе приложений Azure с помощью Visual Studio.<br/>
+<br/>
+<img src="https://habrastorage.org/files/da0/51e/90b/da051e90b614450894d121e8f0db86db.jpg"/><br/>
+ <a href="https://habrahabr.ru/post/314252/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 11:28:18 GMT</pubDate>
+    <dc:creator>Schvepsss</dc:creator>
+    <category><![CDATA[Visual Studio]]></category><category><![CDATA[Open source]]></category><category><![CDATA[ASP]]></category><category><![CDATA[.NET]]></category><category><![CDATA[Блог компании Microsoft]]></category>
+    <category><![CDATA[microsoft]]></category><category><![CDATA[asp.net core]]></category><category><![CDATA[asp.net]]></category><category><![CDATA[.net]]></category><category><![CDATA[руководство для разработчика]]></category><category><![CDATA[руководство]]></category><category><![CDATA[веб-службы]]></category><category><![CDATA[azure]]></category><category><![CDATA[http]]></category><category><![CDATA[api]]></category><category><![CDATA[web-api]]></category><category><![CDATA[web-разработка]]></category><category><![CDATA[web-программирование]]></category><category><![CDATA[web-application]]></category><category><![CDATA[visual studio]]></category><category><![CDATA[c#]]></category><category><![CDATA[c#.net]]></category><category><![CDATA[sdk]]></category><category><![CDATA[ASP.NET Core Web Application]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Термосопротивления: Теория]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/312898/</guid>
+    <link>https://habrahabr.ru/post/312898/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Недавно мне повезло побывать на производстве датчиков температуры, а точнее на швейцарском предприятии IST-AG, где делают платиновые и никелевые термосопротивления (RTD).<br/>
+<br/>
+По этому поводу публикую две статьи, в которых читатель найдет довольно подробное описание этого типа датчиков, путеводитель по основным этапам производственного процесса и обзор возможностей, которые появляются при использовании тонкопленочных технологий.<br/>
+<br/>
+<img src="https://habrastorage.org/files/407/653/37d/40765337d1d348db929db3a637c2d9f8"/><br/>
+<br/>
+В первой статье разбираемся с теоретической базой. Не слишком увлекательно, но весьма полезно.<br/>
+ <a href="https://habrahabr.ru/post/312898/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 11:45:09 GMT</pubDate>
+    <dc:creator>uuuulala</dc:creator>
+    <category><![CDATA[Разработка робототехники]]></category><category><![CDATA[Разработка для интернета вещей]]></category><category><![CDATA[Промышленное программирование]]></category><category><![CDATA[Блог компании ЭФО]]></category>
+    <category><![CDATA[датчик температуры]]></category><category><![CDATA[Pt100]]></category><category><![CDATA[Pt500]]></category><category><![CDATA[Pt1000]]></category><category><![CDATA[IST-AG]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[.NET Tools. Интервью с Сергеем Шкредовым (JetBrains), Павлом Авсениным и Александром Захаровым (DevExpress)]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314524/</guid>
+    <link>https://habrahabr.ru/post/314524/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<div style="text-align:center;"><img src="https://habrastorage.org/files/130/007/247/130007247bf04e55832b2079b966a3f7.jpg" /></div><br/>
+<p>Некоторые разработчики программируют <a href="http://lurkmore.to/%D0%9A%D0%B0%D1%80%D0%BC%D0%B0%D0%BA">взглядом</a>. Другие слепы и <a href="https://habrahabr.ru/post/260463/">программируют</a> на слух\ощупь. Отдельным товарищам <a href="https://habrahabr.ru/post/301536/">достаточно</a> маркера и доски. Но все-таки большинство .NET-разработчиков пользуется Visual Studio для кодирования и дебага, парочкой профайлеров, декомпилятором, плагином для VCS, браузерными инструментами, R#\CodeRush, тулзой для контроля базы данных, баг-трекером, билд-системой <s>и кофемашиной</s>. </p><br/>
+<p>Мне удалось поговорить с разработчиками некоторых из перечисленных средств разработки. </p><br/>
+<p>Под катом — скучная и совершенно неинтересная реклама, немного Roslyn, чуть-чуть Rider, минимум CodeRush, малость описаны фичи C# 7.0, бегло рассмотрены перспективы .NET и один раз упоминается PVS-Studio. </p><br/>
+ <a href="https://habrahabr.ru/post/314524/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 11:28:29 GMT</pubDate>
+    <dc:creator>Oxoron</dc:creator>
+    <category><![CDATA[Компиляторы]]></category><category><![CDATA[C#]]></category><category><![CDATA[.NET]]></category><category><![CDATA[Блог компании JUG.ru Group]]></category>
+    <category><![CDATA[C#]]></category><category><![CDATA[.NET]]></category><category><![CDATA[dotNext Moscow 2016]]></category><category><![CDATA[Rider]]></category><category><![CDATA[средства разработки]]></category><category><![CDATA[Roslyn]]></category><category><![CDATA[CodeRush]]></category><category><![CDATA[visual studio]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[[Из песочницы] React Redux. Получение доступа к state из функции mapDispatchToProps()]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314582/</guid>
+    <link>https://habrahabr.ru/post/314582/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<p>Всем привет! Сегодня рассмотрим решение, довольно-таки популярной проблемы — получение доступа к <b>state</b> из функции <b>mapDispatchToProps()</b> react-redux приложения.</p><br/>
+<p>Имеется типовой компонент-контейнер (про идеологию компонентов react-redux можно почитать <a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.ilv1728o2">здесь</a>), который генерирую с помощью функции <b>connect()</b>. Код представлен ниже (публикую кусок кода, относящийся к данной теме):</p><br/>
+<pre><code class="javascript">const mapStateToProps = (state) =&gt; {
+    return state.play;
+};
+
+const mapDispatchToProps = (dispatch) =&gt; {
+    return {
+        togglePlay: () =&gt; {
+            dispatch(togglePlay());
+        }
+    }
+};
+
+const ButtonPlayComponentContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ButtonPlayComponentView);</code></pre><br/>
+<p>Тут все просто, определяем функции <b>mapStateToProps()</b> для чтения состояния и <b>mapDispatchToProps()</b> для передачи события. Далее генерируем компонент путем передачи созданных функций в <b>connect()</b>.</p> <a href="https://habrahabr.ru/post/314582/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 11:22:29 GMT</pubDate>
+    <dc:creator>gnv_cor</dc:creator>
+    <category><![CDATA[ReactJS]]></category>
+    <category>React</category><category>React Redux</category>
+  </item>
+
+	  <item>
+    <title><![CDATA[[Перевод] 27 open-source ништячков для iOS разработчика]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314444/</guid>
+    <link>https://habrahabr.ru/post/314444/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[В <a href="https://www.edsd.ru/ru/proekty/portfolio">портфолио компании EDISON Software</a> есть 8 проектов, связанных с <a href="https://www.edsd.ru/mobilnye-prilozheniya-dlya-dostupa-k-korporativnoj-infrastrukture">разработкой под Android</a> и 4 крупных проекта, связанных с разработкой под iOS:<br/>
+<br/>
+<ul>
+<li><a href="https://www.edsd.ru/servis-dostavki-bankovskih-uvedomlenij-na-smartfony">Сервис доставки банковских уведомлений на смартфоны</a></li>
+<li> <a href="https://www.edsd.ru/prilozhenie-vivaldi-dlya-raboty-s-ehlektronnoj-bibliotekoj">Приложение Vivaldi для работы с электронной библиотекой</a></li>
+<li> <a href="https://www.edsd.ru/virusnaya-rassylka-informacii">Вирусная рассылка информации</a></li>
+<li> <a href="https://www.edsd.ru/mobilnye-prilozheniya-dlya-dostupa-k-korporativnoj-infrastrukture">Мобильные приложения для доступа к корпоративной инфраструктуре</a></li>
+</ul> <br/>
+Хотим поделиться с вами полезной подборкой open-source библиотек для iOS разработчика.<br/>
+<br/>
+<h2>1. DZNEmptyDataSet</h2><br/>
+Это должно быть стандартом, встроенным в iOS, как способ работы с пустыми таблицами и просмотром коллекций. По умолчанию, если табличное представление пустое, то на экране ничего не отображается. Это не лучший пользовательский опыт, который вы можете получить. <br/>
+<br/>
+С этой библиотекой вам необходимо всего лишь соответствовать определённым протоколам и iOS сама позаботиться о просмотре коллекций и выделит необходимое особым шрифтом, в виде красивых сообщений для пользователя. Элементарное решение для каждого проекта под iOS. <br/>
+<br/>
+<img src="https://habrastorage.org/getpro/habr/post_images/151/e44/539/151e4453990593ac83f9b7944544d8cd.png" alt="image"/><br/>
+<br/>
+<a href="https://github.com/dzenbot/DZNEmptyDataSet"><img src="https://habrastorage.org/files/a00/947/56e/a0094756e9e04d3b8d64032d15249c7d.jpg"/></a><br/>
+ <a href="https://habrahabr.ru/post/314444/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 11:09:13 GMT</pubDate>
+    <dc:creator>MagisterLudi</dc:creator>
+    <category><![CDATA[Разработка под iOS]]></category><category><![CDATA[Программирование]]></category><category><![CDATA[Open source]]></category><category><![CDATA[Блог компании Edison]]></category>
+    <category>ios development</category><category>ios</category><category>open source</category><category>разработка</category><category>программирование проектирование</category><category>отладка</category><category>edisonsoftware</category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Microsoft предоставит антивирусам возможность контроля за активностью подсистемы Linux на Windows 10]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314476/</guid>
+    <link>https://habrahabr.ru/post/314476/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[В предыдущих постах нашего корпоративного блога мы несколько раз <a href="https://habrahabr.ru/company/eset/blog/280584/">касались</a> темы поддержки подсистемы Linux на Windows 10 (WSL), а также <a href="https://habrahabr.ru/company/eset/blog/302976/">описывали</a> особенности ее технической реализации. Бета-версия этой подсистемы была доставлена пользователям в выключенном виде в рамках обновления Windows 10 Redstone 1 (Anniversary Update) в августе этого года.<br/>
+<br/>
+<img src="https://habrastorage.org/files/fba/9f6/67a/fba9f667abf5406fae4b3b046f7bb9e2.jpeg"/><br/>
+<br/>
+Недавно Microsoft начала <a href="https://blogs.msdn.microsoft.com/wsl/2016/11/01/wsl-antivirus-and-firewall-compatibility/">анонсировать</a> изменения в ядре Windows, которые помогут AV-драйверам правильным образом работать с процессами подсистемы Linux, в контексте которых запускаются исполняемые ELF-файлы.<br/>
+ <a href="https://habrahabr.ru/post/314476/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Sun, 06 Nov 2016 15:31:43 GMT</pubDate>
+    <dc:creator>esetnod32</dc:creator>
+    <category><![CDATA[Информационная безопасность]]></category><category><![CDATA[Блог компании ESET NOD32]]></category>
+    <category><![CDATA[microsoft]]></category><category><![CDATA[windows]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Анонс Kharkiv WordPress Meetup #3]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314422/</guid>
+    <link>https://habrahabr.ru/post/314422/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[<div style="text-align:center;"><img src="https://habrastorage.org/files/d66/ad2/1e2/d66ad21e2040449699446b48454fb40d.png" /></div><br/>
+Приглашаем на третью встречу Kharkiv WordPress Meetup, где вас ждут интересные доклады, новые знания и порция вдохновения, а также живое общение с нашими экспертами.<br/>
+ <a href="https://habrahabr.ru/post/314422/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 07:39:08 GMT</pubDate>
+    <dc:creator>NIX_Solutions</dc:creator>
+    <category><![CDATA[Разработка веб-сайтов]]></category><category><![CDATA[WordPress]]></category><category><![CDATA[Блог компании NIX Solutions]]></category>
+    <category><![CDATA[Kharkiv WordPress Meetup #3]]></category>
+  </item>
+
+	  <item>
+    <title><![CDATA[Спикеры Linux Piter #2 отвечают]]></title>
+    <guid isPermaLink="true">https://habrahabr.ru/post/314578/</guid>
+    <link>https://habrahabr.ru/post/314578/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting</link>
+    <description><![CDATA[Спикеры конференции <b><a href="http://LinuxPiter.ru">Linux Piter #2</a></b>, которая состоится <b>11-12 ноября 2016 года</b> в Санкт-Петербурге, поделились с нами своим мнением о важных текущих изменениях в экосистеме Linux, и чего нам ждать в ближайшем будущем; рассказали, каким инструментарием они пользуются в работе, порекомендовали нам полезные ресурсы, блоги, сообщества, конференции по своей тематике, ну и, конечно, ответили на самый главный вопрос: «какими дистрибутивами они пользуются?».<br/>
+<br/>
+<img src="https://habrastorage.org/getpro/habr/post_images/dff/1bb/027/dff1bb027633a547c9a956890761c1d3.png" alt="image"/><br/>
+<br/>
+Мы получили много ответов на нашу мини-анкету и решили все собрать в одной публикации, не разбивая полученный материал на несколько постов, тем более что читается эта статья на одном дыхании.<br/>
+ <a href="https://habrahabr.ru/post/314578/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=interesting#habracut">Читать дальше &rarr;</a>]]></description>
+
+    <pubDate>Mon, 07 Nov 2016 10:44:39 GMT</pubDate>
+    <dc:creator>jkeee</dc:creator>
+    <category><![CDATA[Разработка под Linux]]></category><category><![CDATA[Блог компании Dell EMC]]></category>
+    <category><![CDATA[linux]]></category><category><![CDATA[конференция для разработчиков]]></category><category><![CDATA[конференция разработчиков]]></category><category><![CDATA[linuxpiter]]></category>
+  </item>
+
+
+
+</channel>
+</rss>

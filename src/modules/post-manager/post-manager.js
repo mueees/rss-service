@@ -7,6 +7,10 @@ class PostManager {
         this._log = log;
     }
 
+    create(postData) {
+        return this._PostResource.create(postData);
+    }
+
     getLastPost(feedId) {
         let me = this;
 
@@ -15,7 +19,7 @@ class PostManager {
                 feedId: feedId
             }, {}, {
                 sort: {
-                    public_date: -1
+                    publicDate: -1
                 }
             }).then(function (post) {
                 resolve(post);

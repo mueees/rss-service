@@ -1,13 +1,5 @@
 'use strict';
 
-/*CONFIG STAGE*/
-if (process.env.NODE_ENV == 'development') {
-    let path = require('path');
-
-    // add another folder
-    require('app-module-path').addPath(path.join(__dirname + './../../'));
-}
-
 /*RUN STAGE*/
 let config = require('./config');
 
@@ -28,3 +20,5 @@ require('./modules/db').initConnection({
 let deliveryService = require('./services/delivery')();
 let updateService = require('./services/update')();
 let prepareService = require('./services/prepare')();
+let saveService = require('./services/save')();
+let apiService = require('./services/api')(deliveryService, updateService, prepareService, saveService);

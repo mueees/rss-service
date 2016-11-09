@@ -85,7 +85,7 @@ class FeedParserXML {
                 while (post = stream.read()) {
                     feed.posts.push({
                         title: post.title,
-                        body: post.summary || post.description,
+                        body: post.summary || post.description || '',
                         description: post.description || post.summary,
                         link: post.origlink || post.link,
                         publicDate: post.pubdate || post.date,

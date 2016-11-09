@@ -4,7 +4,7 @@ let WorkManager = require('./../../../../modules/work-manager');
 
 class PrepareManager extends WorkManager {
     postSuccessHandler(items, job) {
-        this._log.debug(job.data.title + ' post was updated');
+        this._log.debug(items.length + ' posts were updated');
     }
 
     postFailedHandler(error, job) {

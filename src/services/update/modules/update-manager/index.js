@@ -4,7 +4,7 @@ let WorkManager = require('./../../../../modules/work-manager');
 
 class UpdateManager extends WorkManager {
     postSuccessHandler(items, job) {
-        this._log.debug(job.data.title + ' feed was updated');
+        this._log.debug(items.length + ' new posts for ' + job.data.title + ' feed were added');
     }
 
     postFailedHandler(error, job) {

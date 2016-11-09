@@ -17,6 +17,8 @@ class Worker {
     execute(feed) {
         let me = this;
 
+        let start = new Date();
+
         return new Promise(function (resolve, reject) {
             // initialize feed parser
             let feedParser = me._feedParserFactory.get({
@@ -43,6 +45,8 @@ class Worker {
                     newPost.feedId = feed._id;
                 });
 
+                console.log((new Date()) - start);
+
                 resolve(newPosts);
             }).catch(function (error) {
                 me._log.error('Cannot update feed due to: ' + error.message);
@@ -54,7 +58,6 @@ class Worker {
                     }
                 };
 
-                // TODO: return appropriate error
                 if (error && error.code) {
                     switch (error.code) {
                         case me._ERRORS.request.unexpectedResponse.code:
@@ -73,6 +76,8 @@ class Worker {
                             break;
                     }
                 }
+
+                console.log((new Date()) - start);
 
                 reject(errorData);
             });

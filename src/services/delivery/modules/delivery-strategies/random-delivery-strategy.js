@@ -12,9 +12,9 @@ function getRandom(min, max) {
 class RandomDeliveryStrategy extends BaseDeliveryStrategy {
     execute() {
         return FeedManager.getFeeds().then(function (feeds) {
-            if(_.isEmpty(feeds)){
+            if (_.isEmpty(feeds)) {
                 return null;
-            }else{
+            } else {
                 let randomIndex = getRandom(0, feeds.length - 1);
                 let feedModel = feeds[randomIndex];
 

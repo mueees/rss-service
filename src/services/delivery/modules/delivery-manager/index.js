@@ -18,7 +18,7 @@ let DELIVERY_MANAGER = require('./delivery-manager.constant');
 
 class DeliveryManager {
     constructor(options) {
-        this._updateFeedQueue = options.updateFeedQueue;
+        this._outcomingQueue = options.outcomingQueue;
 
         // A Number, representing the ID value of the timer
         this._deliveryTimer = null;
@@ -42,7 +42,7 @@ class DeliveryManager {
         let me = this;
 
         return new Promise(function (resolve, reject) {
-            me._updateFeedQueue.add(feed);
+            me._outcomingQueue.add(feed);
 
             resolve();
         });
@@ -102,34 +102,47 @@ class DeliveryManager {
         this._processDelivery();
     }
 
+    _getCurrentStrategy() {
+        return this._strategies[this._strategyName];
+    }
+
     /**
      * Executed every delivery timeout period
      * */
     _processDelivery() {
         let me = this;
-        let strategy = this._strategies[this._strategyName];
 
-        strategy.execute().then(function (feed) {
-            if (!feed) {
-                me._log.info('There is no feed for update');
+        this._canDeliveryFeed().then(function () {
+            let strategy = me._getCurrentStrategy();
+
+            strategy.execute().then(function (feed) {
+                if (!feed) {
+                    me._log.info('There is no feed for update');
+
+                    me._processPostDelivery();
+                } else {
+                    me.addFeedToUpdate(feed).then(function () {
+                        me._log.info(feed.title + ' was added to update');
+
+                        me._processPostDelivery();
+                    }).catch(function (error) {
+                        me._log.error('Cannot add feed to update due to: ' + error.message);
+
+                        me._processPostDelivery();
+                    });
+                }
+            }).catch(function (err) {
+                me._log.error('Strategy error: ' + err.message);
 
                 me._processPostDelivery();
-            } else {
-                me.addFeedToUpdate(feed).then(function () {
-                    me._log.info(feed.title + ' was added to update');
-
-                    me._processPostDelivery();
-                }).catch(function (error) {
-                    me._log.error('Cannot add feed to update due to: ' + error.message);
-
-                    me._processPostDelivery();
-                });
-            }
+            })
         }).catch(function (err) {
-            me._log.error('Strategy error: ' + err.message);
-
-            me._processPostDelivery();
+            me._log.info('Cannot process delivery due to: ' + err.message);
         });
+    }
+
+    _canDeliveryFeed() {
+        return Promise.resolve();
     }
 
     _processPostDelivery() {

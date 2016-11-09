@@ -16,8 +16,8 @@ function initialize() {
 
         // initialize manager
         deliveryManager = new DeliveryManager({
-            updateFeedQueue: updateFeedQueue,
-            deliveryTimeout: 1500,
+            outcomingQueue: updateFeedQueue,
+            deliveryTimeout: 10000,
             log: log
         });
 

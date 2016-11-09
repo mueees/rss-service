@@ -14,7 +14,7 @@ require('./modules/db').initConnection({
 });
 
 // initialize feeds
-// require('./initialization').init();
+require('./initialization').init();
 
 // Enable services
 let deliveryService = require('./services/delivery')();

@@ -1,7 +1,9 @@
 'use strict';
 
 let feedUrls = [
-    'https://habrahabr.ru/rss/interesting'
+    'https://habrahabr.ru/rss/interesting',
+    'https://www.reddit.com/.rss',
+    'https://geektimes.ru/rss/best/'
 ];
 
 let _ = require('lodash');

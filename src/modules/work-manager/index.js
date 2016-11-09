@@ -29,6 +29,14 @@ class WorkManager {
         this._hive.getMaxWorkers();
     }
 
+    // hook
+    postSuccessHandler(items, job) {
+    }
+
+    // hook
+    postFailedHandler(error, job) {
+    }
+
     /**
      * Main method that process job
      * */
@@ -39,7 +47,7 @@ class WorkManager {
             done(null);
 
             this._hive.execute(job.data).then(function (result) {
-                me._successJobHandler(result, job, done);
+                me._successJobHandler(result, job);
             }).catch(function (err) {
                 me._failedJobHandler(err, job, done);
             });
@@ -50,7 +58,7 @@ class WorkManager {
         }
     }
 
-    _successJobHandler(items) {
+    _successJobHandler(items, job) {
         let me = this;
 
         if (!_.isArray(items)) {
@@ -60,12 +68,16 @@ class WorkManager {
         _.each(items, function (item) {
             me._outcomingQueue.add(item);
         });
+
+        this.postSuccessHandler(items, job);
     }
 
     _failedJobHandler(error, job) {
         this._log.error('Cannot update feed due to: ' + error.message);
 
         this._errorQueue.add(error);
+
+        this.postFailedHandler(error, job);
     }
 }
 

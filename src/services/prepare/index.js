@@ -1,7 +1,7 @@
 'use strict';
 
 let queue = require('../../modules/queue');
-let WorkManager = require('./../../modules/work-manager');
+let PrepareManager = require('./modules/prepare-manager');
 let WorkerHive = require('../../modules/worker-hive').WorkerHive;
 let prepareWorker = require('./modules/prepare-post-worker');
 let config = require('../../config');
@@ -24,7 +24,7 @@ function initialize() {
         let errorQueue = queue.get(config.get('queues:error'));
 
         // initialize manager
-        prepareManager = new WorkManager({
+        prepareManager = new PrepareManager({
             hive: hive,
             incomingQueue: preparePostQueue,
             outcomingQueue: savePostQueue,

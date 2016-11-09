@@ -1,7 +1,7 @@
 'use strict';
 
 let queue = require('../../modules/queue');
-let WorkManager = require('./../../modules/work-manager');
+let UpdateManager = require('./modules/update-manager');
 let WorkerHive = require('../../modules/worker-hive').WorkerHive;
 let updateWorker = require('./modules/update-worker');
 let config = require('../../config');
@@ -24,7 +24,7 @@ function initialize() {
         let errorQueue = queue.get(config.get('queues:error'));
 
         // initialize manager
-        updateManager = new WorkManager({
+        updateManager = new UpdateManager({
             hive: hive,
             incomingQueue: updateFeedQueue,
             outcomingQueue: preparePostQueue,

@@ -1,5 +1,7 @@
 'use strict';
 
+let _ = require('lodash');
+
 class Worker {
     constructor(feedParserFactory, postManager, log, ERRORS) {
         this._feedParserFactory = feedParserFactory;
@@ -36,6 +38,10 @@ class Worker {
                 } else {
                     newPosts = me._getNewPosts(feedParser.feed.posts, new Date(lastPost.publicDate));
                 }
+
+                _.each(newPosts, function (newPost) {
+                    newPost.feedId = feed._id;
+                });
 
                 resolve(newPosts);
             }).catch(function (error) {

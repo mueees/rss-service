@@ -32,6 +32,38 @@ describe('Update worker', function () {
         return new UpdateWorker(feedParserFactory, postManager, log, ERRORS);
     }
 
+    it('should add to post feedId', function (done) {
+        feedParserFactory = {
+            get: function () {
+                return {
+                    parse: function () {
+                        return Promise.resolve();
+                    },
+
+                    feed: {
+                        posts: [{
+                            title: 'post title'
+                        }]
+                    }
+                };
+            }
+        };
+
+        let updateWorker = getUpdateWorker();
+
+        updateWorker.execute({
+            _id: 123
+        }).then(function (posts) {
+            asyncCheck(done, function () {
+                let post = posts[0];
+
+                expect(post.feedId).to.equal(123);
+            });
+        }).catch(function () {
+            done(new Error('Unknown error'));
+        });
+    });
+
     it('should return feed error unexpectedResponse', function (done) {
         feedParserFactory = {
             get: function () {

@@ -54,19 +54,19 @@ class DeliveryPermit {
                                 message: 'All queues contain too many jobs: ' + totalJobCount
                             });
 
-                            // return premit to update feed
+                            // return permit to update feed
                         } else {
-                            resole();
+                            resolve();
                         }
-                    }).catch(function () {
+                    }).catch(function (error) {
                         reject({
-                            message: 'Delivery permit error due to: cannot get total feed job count'
+                            message: 'Delivery permit, total count: ' + error.message
                         });
                     });
                 }
-            }).catch(function () {
+            }).catch(function (error) {
                 reject({
-                    message: 'Delivery permit error due to: cannot get update feed job count'
+                    message: 'Delivery permit, update count: ' + error.message
                 });
             });
         });

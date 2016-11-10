@@ -14,6 +14,13 @@ module.exports = function (app) {
         response.send('Rss Services');
     });
 
+    // FEED
+
+    // return all feeds
+    // return feed by id
+    // track feed
+    // remove feed and all related posts
+
     // Queue
     app.get(API_PREFIX + '/queue/:queueName/job/count', function (request, response, next) {
         queue.count([

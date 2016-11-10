@@ -85,23 +85,15 @@ class DeliveryManager {
      * Stop adding new feed for update
      * */
     stop() {
-        this._stopDeliveryLoop();
+        if (this._deliveryTimer) {
+            clearTimeout(this._deliveryTimer);
+        }
     }
 
     /*
      * Start adding new feed for update
      * */
     start() {
-        this._startDeliveryLoop();
-    }
-
-    _stopDeliveryLoop() {
-        if (this._deliveryTimer) {
-            clearTimeout(this._deliveryTimer);
-        }
-    }
-
-    _startDeliveryLoop() {
         this._processDelivery();
     }
 
@@ -160,28 +152,3 @@ class DeliveryManager {
 }
 
 module.exports = DeliveryManager;
-
-function canAddFeedToUpdate() {
-    var def = Q.defer();
-
-    feedForUpdateQueue.count().then(function (jobCount) {
-        if (jobCount > settings.maxJobInFeedForUpdateQueue) {
-            def.reject(jobCount + " jobs in feedForUpdateQueue queue. Reject.");
-        } else {
-
-            // find, how much uncomplited job in rabbit queue in general
-            Queue.countJobs(["feedForUpdate", "preparePost"]).then(function (count) {
-                if (count > settings.maxJobInQueues) {
-                    def.reject(count + " jobs in feedForUpdate and preparePost queues. Reject.");
-                } else {
-                    def.resolve();
-                }
-            });
-        }
-    }, function (err) {
-        log.error(err);
-        def.reject();
-    });
-
-    return def.promise;
-}

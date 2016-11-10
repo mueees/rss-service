@@ -31,4 +31,12 @@ let deliveryService = require('./services/delivery')();
 let updateService = require('./services/update')();
 let prepareService = require('./services/prepare')();
 let saveService = require('./services/save')();
-let apiService = require('./services/api')(deliveryService, updateService, prepareService, saveService);
+let errorService = require('./services/error')();
+
+let apiService = require('./services/api')(
+    deliveryService,
+    updateService,
+    prepareService,
+    saveService,
+    errorService
+);

@@ -1,9 +1,10 @@
 'use strict';
 
+// TODO: move to separate file
 let feedUrls = [
-    'https://habrahabr.ru/rss/interesting',
-    'https://www.reddit.com/.rss',
-    'https://geektimes.ru/rss/best'
+    'https://habrahabr.ru/rss/interesting'/*,
+     'https://geektimes.ru/rss/best',
+     'https://www.reddit.com/.rss'*/
 ];
 
 let environment = require('mue-core/modules/environment');
@@ -17,6 +18,7 @@ exports.init = function () {
         let trackPromises = [];
 
         _.each(feedUrls, function (feedUrl) {
+            // TODO: check before adding to track
             trackPromises.push(feedManager.trackFeed(feedUrl));
         });
 
@@ -27,7 +29,7 @@ exports.init = function () {
 
             log.error('Cannot initialize rss service');
         });
-    }else{
+    } else {
         log.info('Skip Rss initialization');
     }
 };

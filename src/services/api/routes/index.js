@@ -15,14 +15,29 @@ module.exports = function (app) {
     });
 
     // Queue
+    app.get(API_PREFIX + '/queue/:queueName/job/count', function (request, response, next) {
+        queue.count([
+            request.params.queueName
+        ]).then(function (jobCount) {
+            response.send({
+                count: jobCount
+            });
+        }).catch(function (error) {
+            log.error(error.message);
 
-    app.get(API_PREFIX + '/queue/job/total', function (request, response, next) {
+            errorManager.getHttpError(error.message);
+        });
+    });
+
+    app.get(API_PREFIX + '/queue/job/count', function (request, response, next) {
         queue.count([
             config.get('queues:updateFeed'),
             config.get('queues:preparePost'),
             config.get('queues:savePost')
         ]).then(function (jobCount) {
-            response.send(jobCount);
+            response.send({
+                count: jobCount
+            });
         }).catch(function (error) {
             log.error(error.message);
 

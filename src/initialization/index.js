@@ -3,7 +3,7 @@
 let feedUrls = [
     'https://habrahabr.ru/rss/interesting',
     'https://www.reddit.com/.rss',
-    'https://geektimes.ru/rss/best/'
+    'https://geektimes.ru/rss/best'
 ];
 
 let environment = require('mue-core/modules/environment');

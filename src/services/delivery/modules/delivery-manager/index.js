@@ -32,6 +32,9 @@ class DeliveryManager {
         // service for logging
         this._log = options.log;
 
+        // can manager start delivering feed
+        this.deliveryPermit = options.deliveryPermit;
+
         this.deliveryTimeout = options.deliveryTimeout || DELIVERY_MANAGER.defaultDeliveryTimeout;
     }
 
@@ -138,11 +141,13 @@ class DeliveryManager {
             })
         }).catch(function (err) {
             me._log.info('Cannot process delivery due to: ' + err.message);
+
+            me._processPostDelivery();
         });
     }
 
     _canDeliveryFeed() {
-        return Promise.resolve();
+        return this.deliveryPermit.canDeliveryFeed();
     }
 
     _processPostDelivery() {
@@ -155,3 +160,28 @@ class DeliveryManager {
 }
 
 module.exports = DeliveryManager;
+
+function canAddFeedToUpdate() {
+    var def = Q.defer();
+
+    feedForUpdateQueue.count().then(function (jobCount) {
+        if (jobCount > settings.maxJobInFeedForUpdateQueue) {
+            def.reject(jobCount + " jobs in feedForUpdateQueue queue. Reject.");
+        } else {
+
+            // find, how much uncomplited job in rabbit queue in general
+            Queue.countJobs(["feedForUpdate", "preparePost"]).then(function (count) {
+                if (count > settings.maxJobInQueues) {
+                    def.reject(count + " jobs in feedForUpdate and preparePost queues. Reject.");
+                } else {
+                    def.resolve();
+                }
+            });
+        }
+    }, function (err) {
+        log.error(err);
+        def.reject();
+    });
+
+    return def.promise;
+}

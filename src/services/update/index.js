@@ -15,7 +15,7 @@ function initialize() {
         // initialize hive
         let hive = new WorkerHive({
             worker: updateWorker,
-            maxWorkers: 1
+            maxWorkers: 2
         });
 
         // initialize queues

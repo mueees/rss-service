@@ -66,7 +66,7 @@ class FeedManager {
                     _id: feedResource._id
                 }
             }).catch(function (error) {
-                me.log.error(error);
+                me.log.error(error.message);
 
                 return Promise.reject({
                     message: 'Cannot create feed'

@@ -1,20 +1,27 @@
 'use strict';
 
+let kueQueue = require('./kue-queue');
 
-let KueQueue = require('./kue-queue').KueQueue;
-let cleanUp = require('./kue-queue').cleanUp;
-
-let queueCache = {};
-
+/**
+ * Return certain Queue based on the name
+ * */
 function get(name) {
-    if(!queueCache[name]){
-        queueCache[name] = new KueQueue(name);
-    }
-
-    return queueCache[name];
+    return new kueQueue.KueQueue(name);
 }
 
 module.exports = {
+    /**
+     * Return certain Queue based on the name
+     * */
     get: get,
-    cleanUp: cleanUp
+
+    /**
+     * Set of jobs for clean up storage from old jobs
+     * */
+    cleanUp: kueQueue.cleanUp,
+
+    /**
+     * Return job total count from certain queues
+     * */
+    count: kueQueue.count
 };

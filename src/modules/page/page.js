@@ -31,6 +31,9 @@ class Page {
 
         // set of errors
         this.ERRORS = ERRORS;
+
+        // default timeout
+        this.timeout = 4000;
     }
 
     /**
@@ -45,7 +48,8 @@ class Page {
             return new Promise(function (resolve, reject) {
                 me._loader({
                     url: me.url,
-                    fullResponse: true
+                    fullResponse: true,
+                    timeout: me.timeout
                 }).then(function (data) {
                     me.page = data.body;
 

@@ -1,12 +1,16 @@
 'use strict';
 
-class ErrorQueueWorker {
-    constructor() {
+/**
+ * Save the error to DB
+ * */
 
+class ErrorQueueWorker {
+    constructor(errorProvider) {
+        this._errorProvider = errorProvider;
     }
 
     execute(errorData) {
-        return Promise.resolve();
+        return this._errorProvider.create(errorData);
     }
 }
 

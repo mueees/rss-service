@@ -23,5 +23,10 @@ module.exports = {
     /**
      * Return job total count from certain queues
      * */
-    count: kueQueue.count
+    count: kueQueue.count,
+
+    /**
+     * Initialization steps, e.q. removing jobs which were stacked
+     * */
+    initialize: kueQueue.initialize
 };

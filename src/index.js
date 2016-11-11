@@ -16,15 +16,12 @@ require('./modules/db').initConnection({
 // initialize feeds
 require('./initialization').init();
 
-// initialize queue clean up process
+// initialize queue
 let queue = require('./modules/queue');
-queue.cleanUp();
+queue.initialize();
 
-setInterval(function () {
-    queue.cleanUp();
-
-    // each minutes
-}, 1000 * 60);
+// run clean up process, remove completed jobs
+setInterval(queue.cleanUp, 1000 * 60);
 
 // Enable services
 let deliveryService = require('./services/delivery')();

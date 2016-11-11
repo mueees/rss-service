@@ -13,7 +13,12 @@ let queue = require('../../modules/queue');
 let log = require('mue-core/modules/log')(module);
 
 let ErrorManager = require('./modules/error-manager');
-let ErrorQueueWorker = require('./modules/error-queue-worker');
+let errorQueueWorker = require('./modules/error-queue-worker');
+
+// error handlers
+let errorHandlers = require('./modules/error-handlers');
+
+let errorDeliver = require('./modules/error-deliver');
 
 let errorManager;
 
@@ -22,20 +27,14 @@ function initialize() {
         // initialize incoming error queue
         let errorQueue = queue.get(config.get('queues:error'));
 
-        // initialize worker which process errors from the queue
-        let errorQueueWorker = new ErrorQueueWorker();
-
         // TODO: move to constant
         let fixingTimeout = 1000 * 60; // 1 minutes
 
-        // TODO: implement
-        let errorDeliver = {
-            get: function () {
-                return Promise.resolve();
-            }
-        };
-
         errorManager = new ErrorManager(log, errorQueue, errorQueueWorker, errorDeliver, fixingTimeout);
+
+        errorManager.registerErrorWorker(4, new errorHandlers.FeedUnexpectedLoadHandler());
+
+        errorManager.startScheduleFixing();
     }
 
     return errorManager;

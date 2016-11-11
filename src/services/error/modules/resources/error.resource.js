@@ -16,6 +16,7 @@ var errorSchema = new Schema({
 
     attemptToFix: {
         type: Number,
+        default: 0,
         required: true
     },
 

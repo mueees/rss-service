@@ -72,6 +72,21 @@ class KueQueue extends BaseQueue {
     }
 }
 
+function initialize() {
+    // remove active jobs
+    return getActiveJobIds().then(function (activeJobIds) {
+        log.info(activeJobIds.length + ' active jobs removed');
+
+        _.each(activeJobIds, function (activeJobId) {
+            kue.Job.get(activeJobId, function (err, job) {
+                job.remove();
+            });
+        })
+    }).catch(function (error) {
+        return Promise.reject(error);
+    })
+}
+
 function cleanUp() {
     log.info('Queue clean up process');
 
@@ -185,6 +200,21 @@ function getActiveCountFromQueue(queueName) {
     });
 }
 
+function getActiveJobIds() {
+    return new Promise(function (resolve, reject) {
+        queueInstance.active(function (err, activeJobIds) {
+            if (err) {
+                reject({
+                    message: 'Cannot get active jobs: ' + error.message
+                });
+            } else {
+                resolve(activeJobIds);
+            }
+        });
+    });
+}
+
 exports.KueQueue = KueQueue;
 exports.cleanUp = cleanUp;
 exports.count = count;
+exports.initialize = initialize;

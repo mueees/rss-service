@@ -16,15 +16,13 @@ class ErrorManager {
         this._errorWorkers = {};
         this._fixingTimeout = fixingTimeout;
 
-        // start planned fixing
-        this.startScheduleFixing();
-
         // process new errors from the queue
         errorQueue.process(function (job, done) {
             me._processError(job, done)
         });
     }
 
+    // start planned fixing
     startScheduleFixing() {
         this._processScheduleFixing();
     }
@@ -64,6 +62,8 @@ class ErrorManager {
         let me = this;
 
         this._errorQueueWorker.execute(job.data).then(function () {
+            me._log.info('Error was successfully processed');
+
             done();
         }).catch(function (error) {
             me._log.error('Cannot process error: ' + error.message);
@@ -78,7 +78,7 @@ class ErrorManager {
     _processScheduleFixing() {
         let me = this;
 
-        this._errorDeliver.get().then(function (errorId) {
+        this._errorDeliver.getError().then(function (errorId) {
             if (errorId) {
                 me.fixError(errorId).then(function () {
                     me._log.info('The error was fixed');

@@ -7,6 +7,12 @@ class FeedManager {
         this.log = log;
     }
 
+    getFeed(feedId) {
+        return this.FeedResource.findOne({
+            _id: feedId
+        });
+    }
+
     getFeeds() {
         return this.FeedResource.find({});
     }
@@ -62,6 +68,8 @@ class FeedManager {
 
         return this.canTrackFeed(feedUrl).then(function (feed) {
             return me.FeedResource.create(feed).then(function (feedResource) {
+                me.log.info(feedUrl + ' have started tracking');
+
                 return {
                     _id: feedResource._id
                 }

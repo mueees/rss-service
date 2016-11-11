@@ -74,17 +74,36 @@ class KueQueue extends BaseQueue {
 
 function initialize() {
     // remove active jobs
-    return getActiveJobIds().then(function (activeJobIds) {
+    return Promise.all([
+        getActiveJobIds(),
+        getInActiveJobIds()
+    ]).then(function (data) {
+        let activeJobIds = data[0];
+        let inActiveJobIds = data[1];
+
         log.info(activeJobIds.length + ' active jobs removed');
+        log.info(inActiveJobIds.length + ' inactive jobs currently');
 
         _.each(activeJobIds, function (activeJobId) {
             kue.Job.get(activeJobId, function (err, job) {
                 job.remove();
             });
-        })
+        });
+
+        // sometimes jobs stack in inactive state, it's common kue issue
+        // (https://github.com/Automattic/kue/issues/130),
+        //
+        // before start let's set inactive state for all jobs in inactive state
+        // it seems that it works
+        _.each(inActiveJobIds, function (jobId) {
+            kue.Job.get(jobId, function (err, job) {
+                job.inactive();
+            });
+        });
+
     }).catch(function (error) {
         return Promise.reject(error);
-    })
+    });
 }
 
 function cleanUp() {
@@ -205,10 +224,24 @@ function getActiveJobIds() {
         queueInstance.active(function (err, activeJobIds) {
             if (err) {
                 reject({
-                    message: 'Cannot get active jobs: ' + error.message
+                    message: 'Cannot get active jobs: ' + err.message
                 });
             } else {
                 resolve(activeJobIds);
+            }
+        });
+    });
+}
+
+function getInActiveJobIds() {
+    return new Promise(function (resolve, reject) {
+        queueInstance.inactive(function (err, inactiveJobIds) {
+            if (err) {
+                reject({
+                    message: 'Cannot get inactive jobs: ' + err.message
+                });
+            } else {
+                resolve(inactiveJobIds);
             }
         });
     });

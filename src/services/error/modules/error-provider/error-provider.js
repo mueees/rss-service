@@ -1,8 +1,9 @@
 'use strict';
 
 class ErrorProvider {
-    constructor(ErrorResource) {
+    constructor(ErrorResource, log) {
         this._ErrorResource = ErrorResource;
+        this._log = log;
     }
 
     /**
@@ -27,15 +28,44 @@ class ErrorProvider {
                 error.createDate = new Date();
                 error.nextDateAttempt = new Date();
 
-                error.nextDateAttempt.setDate(error.nextDateAttempt.getDate() + error.attemptToFix * 2);
-
                 error.save().then(resolve).catch(reject)
             }
         });
     }
 
-    find(options) {
-        return this._ErrorResource.find(options);
+    getExpiredNextDateAttempt() {
+        let me = this;
+
+        return this._ErrorResource.find({
+            nextDateAttempt: {
+                $lt: new Date()
+            }
+        }).then(function (errors) {
+            return errors;
+        }).catch(function (error) {
+            me._log.error(error.message);
+
+            return Promise.reject({
+                message: 'Cannot get errors: ' + error.message
+            });
+        });
+    }
+
+    removeById(errorId) {
+        return this._ErrorResource.remove({
+            _id: errorId
+        });
+    }
+
+    edit(errorInstance) {
+        let _id = errorInstance._id;
+
+        // Delete the _id property, otherwise Mongo will return a "Mod on _id not allowed" error
+        delete errorInstance._id;
+
+        return this._ErrorResource.findOneAndUpdate({
+            _id: _id
+        }, errorInstance);
     }
 }
 

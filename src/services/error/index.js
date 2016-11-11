@@ -18,7 +18,7 @@ let errorQueueWorker = require('./modules/error-queue-worker');
 // error handlers
 let errorHandlers = require('./modules/error-handlers');
 
-let errorDeliver = require('./modules/error-deliver');
+let errorCustomer = require('./modules/error-customer');
 
 let errorManager;
 
@@ -28,11 +28,11 @@ function initialize() {
         let errorQueue = queue.get(config.get('queues:error'));
 
         // TODO: move to constant
-        let fixingTimeout = 1000 * 60; // 1 minutes
+        let fixingTimeout = 5000; // 2 seconds
 
-        errorManager = new ErrorManager(log, errorQueue, errorQueueWorker, errorDeliver, fixingTimeout);
+        errorManager = new ErrorManager(log, errorQueue, errorQueueWorker, errorCustomer, fixingTimeout);
 
-        errorManager.registerErrorWorker(4, new errorHandlers.FeedUnexpectedLoadHandler());
+        errorManager.registerErrorWorker(4, errorHandlers.feedUnexpectedLoadHandler);
 
         errorManager.startScheduleFixing();
     }

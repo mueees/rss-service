@@ -7,11 +7,11 @@
  *
  * */
 class ErrorManager {
-    constructor(log, errorQueue, errorQueueWorker, errorDeliver, fixingTimeout) {
+    constructor(log, errorQueue, errorQueueWorker, errorCustomer, fixingTimeout) {
         let me = this;
 
         this._log = log;
-        this._errorDeliver = errorDeliver;
+        this._errorCustomer = errorCustomer;
         this._errorQueueWorker = errorQueueWorker;
         this._errorWorkers = {};
         this._fixingTimeout = fixingTimeout;
@@ -37,6 +37,12 @@ class ErrorManager {
         this._errorWorkers[code] = worker;
     }
 
+
+    fixErrorById(errorId) {
+        // TODO: should find appropriate worker
+        return Promise.reject();
+    }
+
     /**
      * Take error resource as the parameter
      * Choose which worker should try to fix it, and return the result.
@@ -45,8 +51,22 @@ class ErrorManager {
      *
      * Public method, could be executed from the admin ui.
      * */
-    fixError(errorId) {
-        return Promise.reject();
+    fixError(errorInstance) {
+        if (errorInstance.code) {
+            let worker = this._errorWorkers[errorInstance.code];
+
+            if (worker) {
+                return this._errorWorkers[errorInstance.code].fix(errorInstance.data);
+            } else {
+                return Promise.reject({
+                    message: 'No error worker for error with code: ' + errorInstance.code
+                });
+            }
+        } else {
+            return Promise.reject({
+                message: 'Wrong error, cannot find error code'
+            });
+        }
     }
 
     /**
@@ -78,21 +98,33 @@ class ErrorManager {
     _processScheduleFixing() {
         let me = this;
 
-        this._errorDeliver.getError().then(function (errorId) {
-            if (errorId) {
-                me.fixError(errorId).then(function () {
+        this._errorCustomer.getError().then(function (errorInstance) {
+            if (errorInstance) {
+                me.fixError(errorInstance).then(function () {
                     me._log.info('The error was fixed');
 
-                    me._postScheduleFixing();
-                }).catch(function (error) {
-                    me._postScheduleFixing();
+                    me._errorCustomer.processResolvedError(errorInstance).then(function () {
+                        me._postScheduleFixing();
+                    }).catch(function (error) {
+                        me._log.error('Cannot process resolver error: ' + error.message);
 
-                    me._log.error('Cannot fix error: ' + error.message)
+                        me._postScheduleFixing();
+                    });
+                }).catch(function (error) {
+                    me._log.error('Cannot fix error: ' + error.message);
+
+                    me._errorCustomer.processUnResolvedError(errorInstance).then(function () {
+                        me._postScheduleFixing();
+                    }).catch(function () {
+                        me._log.error('Cannot process un-resolver error: ' + error.message);
+
+                        me._postScheduleFixing();
+                    });
                 });
             } else {
-                me._postScheduleFixing();
-
                 me._log.info('There is no error for fixing');
+
+                me._postScheduleFixing();
             }
         }).catch(function (error) {
             me._postScheduleFixing();

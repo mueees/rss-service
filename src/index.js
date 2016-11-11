@@ -13,15 +13,15 @@ require('./modules/db').initConnection({
     host: config.get('db:host')
 });
 
-// initialize feeds
-require('./initialization').init();
-
 // initialize queue
 let queue = require('./modules/queue');
 queue.initialize();
 
 // run clean up process, remove completed jobs
 setInterval(queue.cleanUp, 1000 * 60);
+
+// initialize feeds
+require('./initialization').init();
 
 // Enable services
 let deliveryService = require('./services/delivery')();

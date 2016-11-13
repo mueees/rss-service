@@ -6,24 +6,22 @@ var mongoose = require('mongoose'),
 
 var postSchema = new Schema({
     title: {
-        type: String,
-        required: true
+        type: String
     },
 
     body: {
+        type: String
+    },
+
+    link: {
         type: String,
-        required: true
+        required: true, // empty string is invalid
+        unique: true
     },
 
     description: {
         type: String,
         default: ''
-    },
-
-    link: {
-        type: String,
-        required: true,
-        unique: true
     },
 
     // date when post was published

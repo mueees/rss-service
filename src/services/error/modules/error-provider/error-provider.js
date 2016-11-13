@@ -51,6 +51,10 @@ class ErrorProvider {
         });
     }
 
+    findOne(query) {
+        return this._ErrorResource.findOne(query);
+    }
+
     removeById(errorId) {
         return this._ErrorResource.remove({
             _id: errorId
